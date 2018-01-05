@@ -2,6 +2,7 @@ package de.bitbrain.v0id.core;
 
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public class BulletMachine {
     private final BehaviorManager behaviorManager;
 
     private final Camera camera;
+
+    private final Rectangle bulletCollision = new Rectangle(), targetCollision = new Rectangle();
 
     public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, Camera camera) {
         this.gameWorld = gameWorld;
@@ -94,7 +97,12 @@ public class BulletMachine {
 
             @Override
             public void update(GameObject source, GameObject target, float delta) {
-                super.update(source, target, delta);
+                bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
+                targetCollision.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
+                if (bulletCollision.overlaps(targetCollision)) {
+                    gameWorld.remove(source);
+                }
+
             }
         };
     }

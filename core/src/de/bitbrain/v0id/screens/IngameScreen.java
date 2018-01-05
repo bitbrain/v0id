@@ -79,7 +79,7 @@ public class IngameScreen extends AbstractScreen {
         bulletMachine.register(BulletType.PLASMA, 8f);
         context.getRenderManager().register(BulletType.PLASMA, new PolygonRenderer(Colors.NEON_LIME, new float[]{}));
         ShootingBehavior shootingBehavior = new ShootingBehavior();
-        shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.5f, 0.0f, 700f));
+        shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));
         context.getBehaviorManager().apply(shootingBehavior, ship);
 
         // Setup world generation
