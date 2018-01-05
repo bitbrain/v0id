@@ -4,6 +4,9 @@ package de.bitbrain.v0id.core;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.bitbrain.braingdx.behavior.Behavior;
 import de.bitbrain.braingdx.behavior.BehaviorAdapter;
 import de.bitbrain.braingdx.behavior.BehaviorManager;
@@ -13,6 +16,19 @@ import de.bitbrain.braingdx.world.GameWorld;
 import de.bitbrain.v0id.GameConfig;
 
 public class BulletMachine {
+
+    public final class Bullet {
+
+        private final float size;
+
+        Bullet(float size) {
+            this.size = size;
+        }
+
+        public float getSize() {
+            return size;
+        }
+    }
 
     private final GameWorld gameWorld;
 
@@ -26,19 +42,33 @@ public class BulletMachine {
         this.camera = camera;
     }
 
-    public void spawn(final float x, final float y, final String bulletType, Vector2 velocity) {
-        GameObject bullet = gameWorld.addObject(new Mutator<GameObject>() {
+    private final Map<BulletType, Bullet> bullets = new HashMap<BulletType, Bullet>();
+
+    public void register(BulletType type, float size) {
+        bullets.put(type, new Bullet(size));
+    }
+
+    public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY) {
+        final Bullet bullet = bullets.get(bulletType);
+        spawn(source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
+              source.getTop() + source.getHeight(),
+              bulletType, velocityX, velocityY);
+    }
+
+    public void spawn(final float x, final float y, final BulletType bulletType, float velocityX, float velocityY) {
+        final Bullet bullet = bullets.get(bulletType);
+        GameObject bulletObject = gameWorld.addObject(new Mutator<GameObject>() {
             @Override
             public void mutate(GameObject target) {
-                target.setDimensions(20f, 20f);
+                target.setDimensions(bullet.getSize(), bullet.getSize());
                 target.setPosition(x, y);
                 target.setType(bulletType);
             }
-        });
-        behaviorManager.apply(createBehavior(bulletType, velocity), bullet);
+        }, true);
+        behaviorManager.apply(createBehavior(velocityX, velocityY), bulletObject);
     }
 
-    private Behavior createBehavior(String bulletType, final Vector2 velocity) {
+    private Behavior createBehavior(final float velocityX, final float velocityY) {
         return new BehaviorAdapter() {
             @Override
             public void update(GameObject source, float delta) {
@@ -56,8 +86,8 @@ public class BulletMachine {
                 } else if (cameraBottom < source.getTop()) {
                     gameWorld.remove(source);
                 } else {
-                    float speedX = (velocity.x) * delta;
-                    float speedY = (GameConfig.BASE_SPEED + velocity.y) * delta;
+                    float speedX = (velocityX) * delta;
+                    float speedY = (GameConfig.BASE_SPEED + velocityY) * delta;
                     source.move(speedX, speedY);
                 }
             }

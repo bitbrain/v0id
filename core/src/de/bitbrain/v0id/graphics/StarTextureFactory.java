@@ -17,7 +17,7 @@ import java.util.Random;
 public class StarTextureFactory implements Disposable {
 
     private static final String STAR_SEED = "r3782387r2837r2973r-02r-298r-28r";
-    private static final Color STAR_COLOR = Color.WHITE;
+    private static final Color STAR_COLOR = Colors.LIGHT_SORROW;
 
     private final Random random = new Random(STAR_SEED.hashCode());
     private final List<Texture> textures = new ArrayList<Texture>();
