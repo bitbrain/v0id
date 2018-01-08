@@ -32,7 +32,7 @@ public class WorldGenerator {
             timer.reset();
             GameObject object = world.addObject();
             object.setType("block");
-            object.setDimensions(128f, 32f);
+            object.setDimensions(64f, 64f);
             object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f + 32f);
             if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
                 object.setPosition(camera.position.x - camera.viewportWidth / 2f, object.getTop());

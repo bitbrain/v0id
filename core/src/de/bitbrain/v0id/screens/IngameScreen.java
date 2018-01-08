@@ -3,13 +3,19 @@ package de.bitbrain.v0id.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
+import de.bitbrain.braingdx.graphics.lighting.LightingManager;
+import de.bitbrain.braingdx.graphics.lighting.PointLightBehavior;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
+import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
+import de.bitbrain.braingdx.postprocessing.effects.Bloom;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.GameConfig;
+import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.BulletType;
 import de.bitbrain.v0id.core.CameraController;
@@ -64,23 +70,29 @@ public class IngameScreen extends AbstractScreen {
         // Setup player
         ship = context.getGameWorld().addObject();
         ship.setType("ship");
-        ship.setDimensions(32, 32);
-        context.getRenderManager().register("ship", new PolygonRenderer(Colors.NEON_CHRIMSON, new float[]{}));
+        ship.setDimensions(64, 64);
+        context.getRenderManager().register("ship", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
         ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
 
         // Setup world objects
-        context.getRenderManager().register("block", new PolygonRenderer(Colors.NEON_SKY, new float[]{}));
+        context.getRenderManager().register("block", new SpriteRenderer(Assets.Textures.OBJECT_BLOCK));
 
         // Setup Camera
         cameraController = new CameraController(context.getGameCamera());
 
         // Setup weapon systems
         bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), context.getGameCamera().getInternal());
-        bulletMachine.register(BulletType.PLASMA, 8f);
-        context.getRenderManager().register(BulletType.PLASMA, new PolygonRenderer(Colors.NEON_LIME, new float[]{}));
+        bulletMachine.register(BulletType.PLASMA, 32f);
+        context.getRenderManager().register(BulletType.PLASMA, new SpriteRenderer(Assets.Textures.BULLET_PLASMA));
         ShootingBehavior shootingBehavior = new ShootingBehavior();
         shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));
         context.getBehaviorManager().apply(shootingBehavior, ship);
+
+        context.getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 1200f, context.getLightingManager()), ship);
+        context.getLightingManager().setAmbientLight(Colors.LIGHT_SORROW);
+        LightingManager.LightingConfig config = context.getLightingManager().new LightingConfig();
+        config.diffuseLighting(true);
+        context.getLightingManager().setConfig(config);
 
         // Setup world generation
         worldGenerator = new WorldGenerator(context.getGameWorld(), context.getGameCamera().getInternal());
