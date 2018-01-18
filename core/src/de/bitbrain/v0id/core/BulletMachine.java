@@ -76,23 +76,10 @@ public class BulletMachine {
             @Override
             public void update(GameObject source, float delta) {
                 super.update(source, delta);
-                float cameraLeft = camera.position.x - camera.viewportWidth / 2f;
-                float cameraRight = camera.position.x + camera.viewportWidth / 2f;
-                float cameraTop = camera.position.y - camera.viewportHeight / 2f;
-                float cameraBottom = camera.position.y + camera.viewportHeight / 2f;
-                if (cameraLeft > source.getLeft() + source.getWidth()) {
-                    gameWorld.remove(source);
-                } else if (cameraRight < source.getLeft()) {
-                    gameWorld.remove(source);
-                } else if (cameraTop > source.getTop() + source.getHeight()) {
-                    gameWorld.remove(source);
-                } else if (cameraBottom < source.getTop()) {
-                    gameWorld.remove(source);
-                } else {
-                    float speedX = (velocityX) * delta;
-                    float speedY = (GameConfig.BASE_SPEED + velocityY) * delta;
-                    source.move(speedX, speedY);
-                }
+
+                float speedX = (velocityX) * delta;
+                float speedY = (GameConfig.BASE_SPEED + velocityY) * delta;
+                source.move(speedX, speedY);
             }
 
             @Override
@@ -100,6 +87,16 @@ public class BulletMachine {
                 bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
                 targetCollision.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
                 if (bulletCollision.overlaps(targetCollision)) {
+                    if (target.hasAttribute(Attribute.HEALTH)) {
+                        Integer health = (Integer)target.getAttribute(Attribute.HEALTH);
+                        if (health > 0) {
+                            target.setAttribute(Attribute.HEALTH, health - 1);
+                        }
+                        health = (Integer)target.getAttribute(Attribute.HEALTH);
+                        if (health < 1) {
+                            gameWorld.remove(target);
+                        }
+                    }
                     gameWorld.remove(source);
                 }
 

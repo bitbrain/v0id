@@ -5,13 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.graphics.lighting.LightingManager;
 import de.bitbrain.braingdx.graphics.lighting.PointLightBehavior;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
-import de.bitbrain.braingdx.postprocessing.effects.Bloom;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.GameConfig;
@@ -19,12 +21,13 @@ import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.BulletType;
 import de.bitbrain.v0id.core.CameraController;
+import de.bitbrain.v0id.core.GameObjectFactory;
 import de.bitbrain.v0id.core.Respawner;
 import de.bitbrain.v0id.core.ShootingBehavior;
 import de.bitbrain.v0id.core.Weapon;
 import de.bitbrain.v0id.graphics.Colors;
 import de.bitbrain.v0id.graphics.ParallaxRenderLayer;
-import de.bitbrain.v0id.graphics.PolygonRenderer;
+import de.bitbrain.v0id.graphics.SpriteHealthRenderer;
 import de.bitbrain.v0id.graphics.StarTextureFactory;
 import de.bitbrain.v0id.levelgen.LevelBounds;
 import de.bitbrain.v0id.levelgen.WorldGenerator;
@@ -32,6 +35,8 @@ import de.bitbrain.v0id.levelgen.WorldGenerator;
 public class IngameScreen extends AbstractScreen {
 
     private GameObject ship;
+
+    private GameObjectFactory factory;
 
     private Camera camera;
 
@@ -68,14 +73,12 @@ public class IngameScreen extends AbstractScreen {
         backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 5,12), 0.72f).setAlpha(0.6f);
 
         // Setup player
+        GameObjectFactory factory = new GameObjectFactory(context.getGameWorld());
         ship = context.getGameWorld().addObject();
         ship.setType("ship");
         ship.setDimensions(64, 64);
         context.getRenderManager().register("ship", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
         ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
-
-        // Setup world objects
-        context.getRenderManager().register("block", new SpriteRenderer(Assets.Textures.OBJECT_BLOCK));
 
         // Setup Camera
         cameraController = new CameraController(context.getGameCamera());
@@ -88,14 +91,24 @@ public class IngameScreen extends AbstractScreen {
         shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));
         context.getBehaviorManager().apply(shootingBehavior, ship);
 
-        context.getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 1200f, context.getLightingManager()), ship);
-        context.getLightingManager().setAmbientLight(Colors.LIGHT_SORROW);
-        LightingManager.LightingConfig config = context.getLightingManager().new LightingConfig();
-        config.diffuseLighting(true);
-        context.getLightingManager().setConfig(config);
+        // Lighting
+        //context.getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 1200f, context.getLightingManager()), ship);
+        //context.getLightingManager().setAmbientLight(Colors.LIGHT_SORROW);
+        //LightingManager.LightingConfig config = context.getLightingManager().new LightingConfig();
+        //config.diffuseLighting(true);
+        //context.getLightingManager().setConfig(config);
+
+        // Setup world objects
+        Map<Integer, String> map = new HashMap<Integer, String>();
+        map.put(1, Assets.Textures.OBJECT_BLOCK_LAVA);
+        map.put(2, Assets.Textures.OBJECT_BLOCK_LAVA);
+        map.put(3, Assets.Textures.OBJECT_BLOCK_DAMAGED);
+        map.put(4, Assets.Textures.OBJECT_BLOCK_DAMAGED);
+        map.put(5, Assets.Textures.OBJECT_BLOCK);
+        context.getRenderManager().register("block", new SpriteHealthRenderer(map));
 
         // Setup world generation
-        worldGenerator = new WorldGenerator(context.getGameWorld(), context.getGameCamera().getInternal());
+        worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal());
     }
 
     @Override
