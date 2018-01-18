@@ -41,7 +41,9 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         Object health = object.getAttribute(Attribute.HEALTH);
         if (health != null) {
             Texture texture = getTexture((Integer)health);
-            batch.draw(texture, object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
+            if (texture != null) {
+                batch.draw(texture, object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
+            }
         }
     }
 

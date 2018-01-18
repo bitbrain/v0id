@@ -56,7 +56,6 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onCreate(GameContext context) {
-
         camera = context.getGameCamera().getInternal();
         respawner = new Respawner(camera);
 
@@ -72,14 +71,6 @@ public class IngameScreen extends AbstractScreen {
         backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 4,17), 0.85f).setAlpha(0.55f);
         backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 5,12), 0.72f).setAlpha(0.6f);
 
-        // Setup player
-        GameObjectFactory factory = new GameObjectFactory(context.getGameWorld());
-        ship = context.getGameWorld().addObject();
-        ship.setType("ship");
-        ship.setDimensions(64, 64);
-        context.getRenderManager().register("ship", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
-        ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
-
         // Setup Camera
         cameraController = new CameraController(context.getGameCamera());
 
@@ -87,6 +78,15 @@ public class IngameScreen extends AbstractScreen {
         bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), context.getGameCamera().getInternal());
         bulletMachine.register(BulletType.PLASMA, 32f);
         context.getRenderManager().register(BulletType.PLASMA, new SpriteRenderer(Assets.Textures.BULLET_PLASMA));
+
+        // Setup player
+        GameObjectFactory factory = new GameObjectFactory(context.getGameWorld(), context.getBehaviorManager(), bulletMachine);
+        ship = context.getGameWorld().addObject();
+        ship.setType("ship");
+        ship.setDimensions(64, 64);
+        context.getRenderManager().register("ship", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
+        context.getRenderManager().register("viper", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
+        ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
         ShootingBehavior shootingBehavior = new ShootingBehavior();
         shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));
         context.getBehaviorManager().apply(shootingBehavior, ship);

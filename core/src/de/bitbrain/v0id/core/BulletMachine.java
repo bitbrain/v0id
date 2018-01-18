@@ -53,8 +53,15 @@ public class BulletMachine {
 
     public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY) {
         final Bullet bullet = bullets.get(bulletType);
+        float top = 0f;
+        // Moved downwards, shoot down!
+        if (velocityY < 0) {
+            top = source.getTop() - source.getHeight();
+        } else {
+            top = source.getTop() + source.getHeight();
+        }
         spawn(source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
-              source.getTop() + source.getHeight(),
+              top,
               bulletType, velocityX, velocityY);
     }
 
@@ -84,6 +91,12 @@ public class BulletMachine {
 
             @Override
             public void update(GameObject source, GameObject target, float delta) {
+                Object sourceType = source.getType();
+                Object targetType = target.getType();
+                // Do ignore bullets
+                if (sourceType instanceof BulletType && targetType instanceof BulletType) {
+                    return;
+                }
                 bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
                 targetCollision.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
                 if (bulletCollision.overlaps(targetCollision)) {

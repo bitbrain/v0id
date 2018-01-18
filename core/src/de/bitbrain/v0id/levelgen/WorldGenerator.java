@@ -1,10 +1,7 @@
 package de.bitbrain.v0id.levelgen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import de.bitbrain.braingdx.util.DeltaTimer;
@@ -19,7 +16,8 @@ public class WorldGenerator {
 
     private final Random random = new Random();
 
-    private final DeltaTimer timer = new DeltaTimer();
+    private final DeltaTimer obstacleTimer = new DeltaTimer();
+    private final DeltaTimer enemyTimer = new DeltaTimer();
 
     public WorldGenerator(GameObjectFactory factory, Camera camera) {
         this.factory = factory;
@@ -27,10 +25,23 @@ public class WorldGenerator {
     }
 
     public void update(float delta) {
-        timer.update(delta);
-        if (timer.reached(1f)) {
-            timer.reset();
+        obstacleTimer.update(delta);
+        enemyTimer.update(delta);
+        if (obstacleTimer.reached(1f)) {
+            obstacleTimer.reset();
             GameObject object = factory.spawnMeteror();
+            object.setDimensions(64f, 64f);
+            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f + 32f);
+            if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
+                object.setPosition(camera.position.x - camera.viewportWidth / 2f, object.getTop());
+            }
+            if (object.getLeft() + object.getWidth() > camera.position.x + camera.viewportWidth / 2f) {
+                object.setPosition(camera.position.x + camera.viewportWidth / 2f, object.getTop());
+            }
+        }
+        if (enemyTimer.reached(5f)) {
+            enemyTimer.reset();
+            GameObject object = factory.spawnEnemy();
             object.setDimensions(64f, 64f);
             object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f + 32f);
             if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
