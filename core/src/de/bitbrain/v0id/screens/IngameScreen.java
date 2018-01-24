@@ -18,6 +18,7 @@ import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
+import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.BulletType;
 import de.bitbrain.v0id.core.CameraController;
@@ -75,17 +76,20 @@ public class IngameScreen extends AbstractScreen {
         cameraController = new CameraController(context.getGameCamera());
 
         // Setup weapon systems
-        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), context.getGameCamera().getInternal());
+        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), respawner);
         bulletMachine.register(BulletType.PLASMA, 32f);
+        bulletMachine.register(BulletType.LASER, 32f);
         context.getRenderManager().register(BulletType.PLASMA, new SpriteRenderer(Assets.Textures.BULLET_PLASMA));
+        context.getRenderManager().register(BulletType.LASER, new SpriteRenderer(Assets.Textures.BULLET_LASER));
 
         // Setup player
         GameObjectFactory factory = new GameObjectFactory(context.getGameWorld(), context.getBehaviorManager(), bulletMachine);
         ship = context.getGameWorld().addObject();
         ship.setType("ship");
+        ship.setAttribute(Attribute.HEALTH, 3);
         ship.setDimensions(64, 64);
         context.getRenderManager().register("ship", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
-        context.getRenderManager().register("viper", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
+        context.getRenderManager().register("viper", new SpriteRenderer(Assets.Textures.SHIP_VIPER));
         ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
         ShootingBehavior shootingBehavior = new ShootingBehavior();
         shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));
@@ -101,10 +105,11 @@ public class IngameScreen extends AbstractScreen {
         // Setup world objects
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(1, Assets.Textures.OBJECT_BLOCK_LAVA);
-        map.put(2, Assets.Textures.OBJECT_BLOCK_LAVA);
+        map.put(2, Assets.Textures.OBJECT_BLOCK_DAMAGED);
         map.put(3, Assets.Textures.OBJECT_BLOCK_DAMAGED);
-        map.put(4, Assets.Textures.OBJECT_BLOCK_DAMAGED);
-        map.put(5, Assets.Textures.OBJECT_BLOCK);
+        map.put(4, Assets.Textures.OBJECT_BLOCK_CRACKED);
+        map.put(5, Assets.Textures.OBJECT_BLOCK_CRACKED);
+        map.put(6, Assets.Textures.OBJECT_BLOCK);
         context.getRenderManager().register("block", new SpriteHealthRenderer(map));
 
         // Setup world generation

@@ -35,14 +35,14 @@ public class BulletMachine {
 
     private final BehaviorManager behaviorManager;
 
-    private final Camera camera;
+    private final Respawner respawner;
 
     private final Rectangle bulletCollision = new Rectangle(), targetCollision = new Rectangle();
 
-    public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, Camera camera) {
+    public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, Respawner respawner) {
         this.gameWorld = gameWorld;
         this.behaviorManager = behaviorManager;
-        this.camera = camera;
+        this.respawner = respawner;
     }
 
     private final Map<BulletType, Bullet> bullets = new HashMap<BulletType, Bullet>();
@@ -60,12 +60,12 @@ public class BulletMachine {
         } else {
             top = source.getTop() + source.getHeight();
         }
-        spawn(source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
+        spawn(source, source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
               top,
               bulletType, velocityX, velocityY);
     }
 
-    public void spawn(final float x, final float y, final BulletType bulletType, float velocityX, float velocityY) {
+    private void spawn(GameObject source, final float x, final float y, final BulletType bulletType, float velocityX, float velocityY) {
         final Bullet bullet = bullets.get(bulletType);
         GameObject bulletObject = gameWorld.addObject(new Mutator<GameObject>() {
             @Override
@@ -75,10 +75,10 @@ public class BulletMachine {
                 target.setType(bulletType);
             }
         }, true);
-        behaviorManager.apply(createBehavior(velocityX, velocityY), bulletObject);
+        behaviorManager.apply(createBehavior(source, velocityX, velocityY), bulletObject);
     }
 
-    private Behavior createBehavior(final float velocityX, final float velocityY) {
+    private Behavior createBehavior(final GameObject source, final float velocityX, final float velocityY) {
         return new BehaviorAdapter() {
             @Override
             public void update(GameObject source, float delta) {
@@ -93,6 +93,10 @@ public class BulletMachine {
             public void update(GameObject source, GameObject target, float delta) {
                 Object sourceType = source.getType();
                 Object targetType = target.getType();
+                // Do ignore source
+                if (targetType.equals(source)) {
+                    return;
+                }
                 // Do ignore bullets
                 if (sourceType instanceof BulletType && targetType instanceof BulletType) {
                     return;
@@ -107,7 +111,11 @@ public class BulletMachine {
                         }
                         health = (Integer)target.getAttribute(Attribute.HEALTH);
                         if (health < 1) {
-                            gameWorld.remove(target);
+                            if (!target.getType().equals("ship")) {
+                                gameWorld.remove(target);
+                            } else {
+                                respawner.respawn(target);
+                            }
                         }
                     }
                     gameWorld.remove(source);

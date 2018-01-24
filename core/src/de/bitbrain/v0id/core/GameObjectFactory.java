@@ -1,6 +1,7 @@
 package de.bitbrain.v0id.core;
 
 
+import de.bitbrain.braingdx.behavior.BehaviorAdapter;
 import de.bitbrain.braingdx.behavior.BehaviorManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
@@ -21,18 +22,18 @@ public class GameObjectFactory {
     public GameObject spawnMeteror() {
 
         GameObject object = world.addObject();
-        object.setAttribute(Attribute.HEALTH, 5);
+        object.setAttribute(Attribute.HEALTH, 6);
         object.setType("block");
         return object;
     }
 
     public GameObject spawnEnemy() {
         GameObject object = world.addObject();
-        object.setAttribute(Attribute.HEALTH, 5);
+        object.setAttribute(Attribute.HEALTH, 2);
         object.setType("viper");
         behaviorManager.apply(new RegularEnemyBehavior(), object);
         ShootingBehavior shootingBehavior = new ShootingBehavior();
-        shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 1f, 0.0f, -500f));
+        shootingBehavior.addWeapon(new Weapon(BulletType.LASER, bulletMachine, 0.6f, 0.0f, -350f));
         behaviorManager.apply(shootingBehavior, object);
         return object;
     }
