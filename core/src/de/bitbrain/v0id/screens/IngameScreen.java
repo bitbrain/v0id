@@ -88,12 +88,17 @@ public class IngameScreen extends AbstractScreen {
         ship.setType("ship");
         ship.setAttribute(Attribute.HEALTH, 3);
         ship.setDimensions(64, 64);
-        context.getRenderManager().register("ship", new SpriteRenderer(Assets.Textures.SHIP_RAIDER));
-        context.getRenderManager().register("viper", new SpriteRenderer(Assets.Textures.SHIP_VIPER));
+        Map<Integer, String> shipTextureMap = new HashMap<Integer, String>();
+        shipTextureMap.put(1, Assets.Textures.SHIP_RAIDER);
+        context.getRenderManager().register("ship", new SpriteHealthRenderer(shipTextureMap));
         ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
         ShootingBehavior shootingBehavior = new ShootingBehavior();
         shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));
         context.getBehaviorManager().apply(shootingBehavior, ship);
+
+        Map<Integer, String> viperTextureMap = new HashMap<Integer, String>();
+        viperTextureMap.put(1, Assets.Textures.SHIP_VIPER);
+        context.getRenderManager().register("viper", new SpriteHealthRenderer(viperTextureMap));
 
         // Lighting
         //context.getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 1200f, context.getLightingManager()), ship);
@@ -103,14 +108,14 @@ public class IngameScreen extends AbstractScreen {
         //context.getLightingManager().setConfig(config);
 
         // Setup world objects
-        Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(1, Assets.Textures.OBJECT_BLOCK_LAVA);
-        map.put(2, Assets.Textures.OBJECT_BLOCK_DAMAGED);
-        map.put(3, Assets.Textures.OBJECT_BLOCK_DAMAGED);
-        map.put(4, Assets.Textures.OBJECT_BLOCK_CRACKED);
-        map.put(5, Assets.Textures.OBJECT_BLOCK_CRACKED);
-        map.put(6, Assets.Textures.OBJECT_BLOCK);
-        context.getRenderManager().register("block", new SpriteHealthRenderer(map));
+        Map<Integer, String> blockTextureMap = new HashMap<Integer, String>();
+        blockTextureMap.put(1, Assets.Textures.OBJECT_BLOCK_LAVA);
+        blockTextureMap.put(2, Assets.Textures.OBJECT_BLOCK_DAMAGED);
+        blockTextureMap.put(3, Assets.Textures.OBJECT_BLOCK_DAMAGED);
+        blockTextureMap.put(4, Assets.Textures.OBJECT_BLOCK_CRACKED);
+        blockTextureMap.put(5, Assets.Textures.OBJECT_BLOCK_CRACKED);
+        blockTextureMap.put(6, Assets.Textures.OBJECT_BLOCK);
+        context.getRenderManager().register("block", new SpriteHealthRenderer(blockTextureMap));
 
         // Setup world generation
         worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal());
@@ -153,7 +158,7 @@ public class IngameScreen extends AbstractScreen {
         }
 
         if (ship.getTop() < cameraBottom) {
-            respawner.respawn(ship);
+            respawner.respawn(ship, 3);
         }
     }
 

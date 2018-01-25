@@ -12,7 +12,8 @@ public class Respawner {
         this.camera = camera;
     }
 
-    public void respawn(GameObject object) {
+    public void respawn(GameObject object, int health) {
+        object.setAttribute(Attribute.HEALTH, health);
         object.setPosition(camera.position.x - object.getWidth() / 2f, camera.position.y - object.getHeight() / 2f);
     }
 }

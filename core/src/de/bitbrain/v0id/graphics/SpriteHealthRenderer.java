@@ -115,6 +115,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         BooleanProvider provider = booleanProviders.get(object.getId());
         if (provider != null) {
             SharedTweenManager.getInstance().killTarget(provider);
+            booleanProviders.remove(object.getId());
         }
         provider = new BooleanProvider();
         booleanProviders.put(object.getId(), provider);
@@ -136,7 +137,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         String textureId = resolveTextureId(health);
         if (textureId != null) {
             BooleanProvider booleanProvider = booleanProviders.get(object.getId());
-            if (booleanProvider != null && booleanProvider.getValue()) {
+            if (booleanProvider != null && booleanProvider.getValue() && health > 0) {
                 return damageTextureMapping.get(textureId);
             }
             return SharedAssetManager.getInstance().get(textureId, Texture.class);
