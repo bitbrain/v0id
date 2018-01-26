@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Disposable;
 
 import java.util.Collection;
@@ -58,7 +59,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         Tween.registerAccessor(BooleanProvider.class, new BooleanProviderTween());
     }
 
-    private static final float FLICKER_DURATION = 0.03f;
+    private static final float FLICKER_DURATION = 0.05f;
 
     private final Map<Integer, String> textureMapping;
     private final Map<String, Texture> damageTextureMapping;
@@ -92,12 +93,15 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     public void render(GameObject object, Batch batch, float delta) {
         Object health = object.getAttribute(Attribute.HEALTH);
         if (health != null && health instanceof Integer) {
-            if ((Integer)health < previousHealth && previousHealth > 0f) {
+            if ((Integer)health < previousHealth && previousHealth > 0f && (Integer)health > 0) {
                 triggerDamageAnimation(object);
             }
             Texture texture = getTexture(object, (Integer)health);
             if (texture != null) {
-                batch.draw(texture, object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
+                Sprite sprite = new Sprite(texture);
+                sprite.setBounds(object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
+                sprite.setScale(object.getScale().x);
+                sprite.draw(batch);
             }
             previousHealth = (Integer)health;
         }
@@ -150,7 +154,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         if (textureId == null) {
             if (health > maxHealth) {
                 return textureMapping.get(maxHealth);
-            } else if (health < minHealth) {
+            } else if (health <= minHealth) {
                 return textureMapping.get(minHealth);
             }
         }

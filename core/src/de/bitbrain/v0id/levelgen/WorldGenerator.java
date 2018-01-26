@@ -35,7 +35,7 @@ public class WorldGenerator {
             obstacleOffset = random.nextFloat() * 4f;
             GameObject object = factory.spawnMeteror();
             object.setDimensions(64f, 64f);
-            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f + 32f);
+            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f - 1);
             if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
                 object.setPosition(camera.position.x - camera.viewportWidth / 2f, object.getTop());
             }
@@ -48,7 +48,7 @@ public class WorldGenerator {
             enemyOffset = random.nextFloat() * 5f;
             GameObject object = factory.spawnEnemy();
             object.setDimensions(64f, 64f);
-            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f + 32f);
+            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f - 1);
             if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
                 object.setPosition(camera.position.x - camera.viewportWidth / 2f, object.getTop());
             }

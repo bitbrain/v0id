@@ -22,14 +22,14 @@ public class GameObjectFactory {
 
     public GameObject spawnMeteror() {
 
-        GameObject object = world.addObject();
+        GameObject object = world.addObject(true);
         object.setAttribute(Attribute.HEALTH, GameConfig.BLOCK_HEALTH);
         object.setType("block");
         return object;
     }
 
     public GameObject spawnEnemy() {
-        GameObject object = world.addObject();
+        GameObject object = world.addObject(true);
         object.setAttribute(Attribute.HEALTH, GameConfig.VIPER_HEALTH);
         object.setType("viper");
         behaviorManager.apply(new RegularEnemyBehavior(), object);

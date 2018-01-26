@@ -23,6 +23,7 @@ import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.BulletType;
 import de.bitbrain.v0id.core.CameraController;
 import de.bitbrain.v0id.core.GameObjectFactory;
+import de.bitbrain.v0id.core.KillingMachine;
 import de.bitbrain.v0id.core.Respawner;
 import de.bitbrain.v0id.core.ShootingBehavior;
 import de.bitbrain.v0id.core.Weapon;
@@ -51,12 +52,15 @@ public class IngameScreen extends AbstractScreen {
 
     private WorldGenerator worldGenerator;
 
+    private GameContext context;
+
     public IngameScreen(BrainGdxGame game) {
         super(game);
     }
 
     @Override
     protected void onCreate(GameContext context) {
+        this.context = context;
         camera = context.getGameCamera().getInternal();
         respawner = new Respawner(camera);
 
@@ -76,7 +80,8 @@ public class IngameScreen extends AbstractScreen {
         cameraController = new CameraController(context.getGameCamera());
 
         // Setup weapon systems
-        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), respawner);
+        KillingMachine killingMachine = new KillingMachine(context.getGameWorld(), respawner);
+        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), killingMachine);
         bulletMachine.register(BulletType.PLASMA, 32f);
         bulletMachine.register(BulletType.LASER, 32f);
         context.getRenderManager().register(BulletType.PLASMA, new SpriteRenderer(Assets.Textures.BULLET_PLASMA));
@@ -85,12 +90,13 @@ public class IngameScreen extends AbstractScreen {
         // Setup player
         GameObjectFactory factory = new GameObjectFactory(context.getGameWorld(), context.getBehaviorManager(), bulletMachine);
         ship = context.getGameWorld().addObject();
-        ship.setType("ship");
+        ship.setType("raider");
         ship.setAttribute(Attribute.HEALTH, 3);
+        ship.setAttribute(Attribute.PLAYER, true);
         ship.setDimensions(64, 64);
-        Map<Integer, String> shipTextureMap = new HashMap<Integer, String>();
-        shipTextureMap.put(1, Assets.Textures.SHIP_RAIDER);
-        context.getRenderManager().register("ship", new SpriteHealthRenderer(shipTextureMap));
+        Map<Integer, String> raiderTextureMap = new HashMap<Integer, String>();
+        raiderTextureMap.put(1, Assets.Textures.SHIP_RAIDER);
+        context.getRenderManager().register("raider", new SpriteHealthRenderer(raiderTextureMap));
         ship.setPosition(Gdx.graphics.getWidth() / 2f - ship.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - ship.getHeight() / 2f);
         ShootingBehavior shootingBehavior = new ShootingBehavior();
         shootingBehavior.addWeapon(new Weapon(BulletType.PLASMA, bulletMachine, 0.3f, 0.0f, 700f));

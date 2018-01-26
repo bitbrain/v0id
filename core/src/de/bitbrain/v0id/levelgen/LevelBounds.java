@@ -12,12 +12,11 @@ public class LevelBounds implements GameWorld.WorldBounds {
         float cameraLeft = camera.position.x - camera.viewportWidth / 2f;
         float cameraRight = camera.position.x + camera.viewportWidth / 2f;
         float cameraBottom = camera.position.y - camera.viewportHeight / 2f;
+        float cameraTop = camera.position.y + camera.viewportHeight / 2f;
 
         if (object.getTop() + object.getHeight() < cameraBottom) {
             return false;
-        } else if (cameraLeft > object.getLeft() + object.getWidth()) {
-            return false;
-        } else if (cameraRight < object.getLeft()) {
+        } else if (object.getTop() > cameraTop) {
             return false;
         }
         return true;

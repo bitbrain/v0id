@@ -23,6 +23,9 @@ public class Weapon {
 
     public void shoot(GameObject source, float delta) {
         timer.update(delta);
+        if (!source.isActive()) {
+            return;
+        }
         if (timer.reached(frequency)) {
             timer.reset();
             machine.spawn(source, type, velocity.x, velocity.y);

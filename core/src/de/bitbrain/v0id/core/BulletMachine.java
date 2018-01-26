@@ -34,15 +34,14 @@ public class BulletMachine {
     private final GameWorld gameWorld;
 
     private final BehaviorManager behaviorManager;
-
-    private final Respawner respawner;
-
     private final Rectangle bulletCollision = new Rectangle(), targetCollision = new Rectangle();
 
-    public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, Respawner respawner) {
+    private final KillingMachine killingMachine;
+
+    public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, KillingMachine killingMachine) {
         this.gameWorld = gameWorld;
         this.behaviorManager = behaviorManager;
-        this.respawner = respawner;
+        this.killingMachine = killingMachine;
     }
 
     private final Map<BulletType, Bullet> bullets = new HashMap<BulletType, Bullet>();
@@ -106,16 +105,11 @@ public class BulletMachine {
                 if (bulletCollision.overlaps(targetCollision)) {
                     if (target.hasAttribute(Attribute.HEALTH)) {
                         Integer health = (Integer)target.getAttribute(Attribute.HEALTH);
-                        if (health > 0) {
+                        if (health > 1) {
                             target.setAttribute(Attribute.HEALTH, health - 1);
-                        }
-                        health = (Integer)target.getAttribute(Attribute.HEALTH);
-                        if (health < 1) {
-                            if (!target.getType().equals("ship")) {
-                                gameWorld.remove(target);
-                            } else {
-                                respawner.respawn(target, GameConfig.PLAYER_HEALTH);
-                            }
+                            pushBack(source, target);
+                        } else {
+                            killingMachine.kill(target);
                         }
                     }
                     gameWorld.remove(source);
@@ -123,5 +117,9 @@ public class BulletMachine {
 
             }
         };
+    }
+
+    private void pushBack(GameObject bullet, GameObject target) {
+
     }
 }

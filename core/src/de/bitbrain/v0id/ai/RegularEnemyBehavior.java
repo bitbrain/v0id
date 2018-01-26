@@ -16,9 +16,9 @@ public class RegularEnemyBehavior extends BehaviorAdapter {
     @Override
     public void update(GameObject source, float delta) {
         super.update(source, delta);
-        final float factor = 5f;
+        final float factor = 3f;
         velocity += source.getLeft() < Gdx.graphics.getWidth() / 2f ? factor * random.nextFloat() : -factor * random.nextFloat();
-        source.setPosition(source.getLeft() + 5f * velocity * delta, source.getTop() - 50f * delta);
+        source.setPosition(source.getLeft() + 15f * velocity * delta, source.getTop() - 40f * delta);
     }
 
     @Override
