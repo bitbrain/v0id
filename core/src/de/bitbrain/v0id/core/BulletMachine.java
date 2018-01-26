@@ -114,7 +114,7 @@ public class BulletMachine {
                             if (!target.getType().equals("ship")) {
                                 gameWorld.remove(target);
                             } else {
-                                respawner.respawn(target, 3);
+                                respawner.respawn(target, GameConfig.PLAYER_HEALTH);
                             }
                         }
                     }

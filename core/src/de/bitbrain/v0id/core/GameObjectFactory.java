@@ -5,6 +5,7 @@ import de.bitbrain.braingdx.behavior.BehaviorAdapter;
 import de.bitbrain.braingdx.behavior.BehaviorManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
+import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.ai.RegularEnemyBehavior;
 
 public class GameObjectFactory {
@@ -22,14 +23,14 @@ public class GameObjectFactory {
     public GameObject spawnMeteror() {
 
         GameObject object = world.addObject();
-        object.setAttribute(Attribute.HEALTH, 6);
+        object.setAttribute(Attribute.HEALTH, GameConfig.BLOCK_HEALTH);
         object.setType("block");
         return object;
     }
 
     public GameObject spawnEnemy() {
         GameObject object = world.addObject();
-        object.setAttribute(Attribute.HEALTH, 2);
+        object.setAttribute(Attribute.HEALTH, GameConfig.VIPER_HEALTH);
         object.setType("viper");
         behaviorManager.apply(new RegularEnemyBehavior(), object);
         ShootingBehavior shootingBehavior = new ShootingBehavior();

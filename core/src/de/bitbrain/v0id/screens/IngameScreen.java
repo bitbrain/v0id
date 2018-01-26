@@ -158,7 +158,7 @@ public class IngameScreen extends AbstractScreen {
         }
 
         if (ship.getTop() < cameraBottom) {
-            respawner.respawn(ship, 3);
+            respawner.respawn(ship, GameConfig.PLAYER_HEALTH);
         }
     }
 
