@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -146,10 +147,19 @@ public class IngameScreen extends AbstractScreen {
         context.getStage().addActor(overlay);
 
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 48);
-        style.fontColor = Colors.NEON_CHRIMSON;
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.color = Color.WHITE;
+        param.mono = false;
+        param.size = 48;
+
+        style.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, param);
+        Label points0 = new Label("8495", style);
+        points0.setColor(Colors.NEON_BLUE);
         Label points = new Label("8495", style);
-        points.setPosition(16f, Gdx.graphics.getHeight() - points.getPrefHeight() - 16f);
+        points.setColor(Colors.NEON_LIME);
+        points0.setPosition(16f, Gdx.graphics.getHeight() - points.getPrefHeight() - 18f);
+        points.setPosition(16f, Gdx.graphics.getHeight() - points.getPrefHeight() - 12f);
+        context.getStage().addActor(points0);
         context.getStage().addActor(points);
     }
 
