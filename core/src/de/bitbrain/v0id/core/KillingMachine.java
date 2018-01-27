@@ -4,7 +4,6 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
-import aurelienribon.tweenengine.TweenManager;
 import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
@@ -29,9 +28,13 @@ public class KillingMachine {
             object.setAttribute(Attribute.HEALTH, 0);
             object.setAttribute(Attribute.DEAD, true);
             object.setActive(false);
-            Tween.to(object, GameObjectTween.SCALE, DEATH_DURATION)
+            Tween.to(object, GameObjectTween.ALPHA, DEATH_DURATION)
                     .target(0f)
-                    .ease(TweenEquations.easeOutQuad)
+                    .ease(TweenEquations.easeOutCubic)
+                    .start(SharedTweenManager.getInstance());
+            Tween.to(object, GameObjectTween.SCALE, DEATH_DURATION)
+                    .target(4f)
+                    .ease(TweenEquations.easeOutCubic)
                     .setCallbackTriggers(TweenCallback.COMPLETE)
                     .setCallback(new TweenCallback() {
                         @Override

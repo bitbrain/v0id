@@ -4,12 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Scaling;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
+import de.bitbrain.braingdx.graphics.GraphicsFactory;
 import de.bitbrain.braingdx.graphics.lighting.LightingManager;
 import de.bitbrain.braingdx.graphics.lighting.PointLightBehavior;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
@@ -27,6 +35,7 @@ import de.bitbrain.v0id.core.KillingMachine;
 import de.bitbrain.v0id.core.Respawner;
 import de.bitbrain.v0id.core.ShootingBehavior;
 import de.bitbrain.v0id.core.Weapon;
+import de.bitbrain.v0id.graphics.BitmapFontBaker;
 import de.bitbrain.v0id.graphics.Colors;
 import de.bitbrain.v0id.graphics.ParallaxRenderLayer;
 import de.bitbrain.v0id.graphics.SpriteHealthRenderer;
@@ -125,6 +134,23 @@ public class IngameScreen extends AbstractScreen {
 
         // Setup world generation
         worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal());
+
+        // Setup UI
+        NinePatch patch = GraphicsFactory.createNinePatch(SharedAssetManager.getInstance().get(Assets.Textures.UI_BACKGROUND_BAR, Texture.class), 32);
+        Image image = new Image(new NinePatchDrawable(patch));
+        image.setBounds(16f, 16f, 78f, 256f);
+        context.getStage().addActor(image);
+        NinePatch patch2 = GraphicsFactory.createNinePatch(SharedAssetManager.getInstance().get(Assets.Textures.UI_FOREGROUND_HEALTH, Texture.class), 36);
+        Image overlay = new Image(new NinePatchDrawable(patch2));
+        overlay.setBounds(16f, 16f, 78f, 256f);
+        context.getStage().addActor(overlay);
+
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 48);
+        style.fontColor = Colors.NEON_CHRIMSON;
+        Label points = new Label("8495", style);
+        points.setPosition(16f, Gdx.graphics.getHeight() - points.getPrefHeight() - 16f);
+        context.getStage().addActor(points);
     }
 
     @Override

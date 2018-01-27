@@ -16,6 +16,8 @@ public class Respawner {
         object.setAttribute(Attribute.HEALTH, health);
         object.setAttribute(Attribute.DEAD, false);
         object.setActive(true);
+        object.getScale().set(1f, 1f);
+        object.setColor(1f, 1f, 1f,1f);
         object.setPosition(camera.position.x - object.getWidth() / 2f, camera.position.y - object.getHeight() / 2f);
     }
 }

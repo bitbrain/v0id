@@ -70,7 +70,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     public SpriteHealthRenderer(Map<Integer, String> textureMapping) {
         this.textureMapping = textureMapping;
         damageTextureMapping = buildDamageTextures(textureMapping.values());
-        int tmpMin = 0;
+        int tmpMin = 1;
         int tmpMax = 0;
         for (Integer value : textureMapping.keySet()) {
             if (value > tmpMax) {
@@ -99,6 +99,8 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
             Texture texture = getTexture(object, (Integer)health);
             if (texture != null) {
                 Sprite sprite = new Sprite(texture);
+                sprite.setColor(object.getColor());
+                sprite.setOrigin(object.getWidth() / 2f, object.getHeight() / 2f);
                 sprite.setBounds(object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
                 sprite.setScale(object.getScale().x);
                 sprite.draw(batch);
