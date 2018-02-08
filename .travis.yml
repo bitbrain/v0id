@@ -20,7 +20,7 @@ cache:
 script: ./gradlew desktop:dist
 
 after_script:
-  ./deploy-desktop.sh
+  chmod +x deploy-desktop.sh && ./deploy-desktop.sh
 
 branches:
   only:
