@@ -9,8 +9,6 @@ public class LevelBounds implements GameWorld.WorldBounds {
 
     @Override
     public boolean isInBounds(GameObject object, OrthographicCamera camera) {
-        float cameraLeft = camera.position.x - camera.viewportWidth / 2f;
-        float cameraRight = camera.position.x + camera.viewportWidth / 2f;
         float cameraBottom = camera.position.y - camera.viewportHeight / 2f;
         float cameraTop = camera.position.y + camera.viewportHeight / 2f;
 

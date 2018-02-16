@@ -2,11 +2,15 @@ package de.bitbrain.v0id.levelgen;
 
 import com.badlogic.gdx.graphics.Camera;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import de.bitbrain.braingdx.util.DeltaTimer;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.core.GameObjectFactory;
+import de.bitbrain.v0id.core.ShipSpawnTemplate;
+import de.bitbrain.v0id.core.TemplateService;
 
 public class WorldGenerator {
 
@@ -16,45 +20,43 @@ public class WorldGenerator {
 
     private final Random random = new Random();
 
-    private final DeltaTimer obstacleTimer = new DeltaTimer();
-    private final DeltaTimer enemyTimer = new DeltaTimer();
+    private final GameObject player;
 
-    private float obstacleOffset = 0f;
-    private float enemyOffset = 0f;
+    private final Map<Object, DeltaTimer> timers = new HashMap<Object, DeltaTimer>();
 
-    public WorldGenerator(GameObjectFactory factory, Camera camera) {
+    public WorldGenerator(GameObjectFactory factory, Camera camera, GameObject player) {
         this.factory = factory;
         this.camera = camera;
+        this.player = player;
+        for (ShipSpawnTemplate template : TemplateService.shipTemplates) {
+            timers.put(template.type, new DeltaTimer());
+        }
     }
 
     public void update(float delta) {
-        obstacleTimer.update(delta);
-        enemyTimer.update(delta);
-        if (obstacleTimer.reached(2f + obstacleOffset)) {
-            obstacleTimer.reset();
-            obstacleOffset = random.nextFloat() * 4f;
-            GameObject object = factory.spawnMeteror();
-            object.setDimensions(64f, 64f);
-            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f - 1);
-            if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
-                object.setPosition(camera.position.x - camera.viewportWidth / 2f, object.getTop());
+        for (ShipSpawnTemplate template : TemplateService.shipTemplates) {
+            if (template.type.equals(player.getType())) {
+                continue;
             }
-            if (object.getLeft() + object.getWidth() > camera.position.x + camera.viewportWidth / 2f) {
-                object.setPosition(camera.position.x + camera.viewportWidth / 2f, object.getTop());
+            DeltaTimer timer = timers.get(template.type);
+            timer.update(delta);
+            if (timer.reached(template.interval)) {
+                // Do spawn a new enemy
+                factory.spawnShip(template, getRandomX(), getCameraTop());
+                timer.reset();
             }
         }
-        if (enemyTimer.reached(3f + enemyOffset)) {
-            enemyTimer.reset();
-            enemyOffset = random.nextFloat() * 5f;
-            GameObject object = factory.spawnEnemy();
-            object.setDimensions(64f, 64f);
-            object.setPosition(camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat()), camera.position.y + camera.viewportHeight / 2f - 1);
-            if (object.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
-                object.setPosition(camera.position.x - camera.viewportWidth / 2f, object.getTop());
-            }
-            if (object.getLeft() + object.getWidth() > camera.position.x + camera.viewportWidth / 2f) {
-                object.setPosition(camera.position.x + camera.viewportWidth / 2f, object.getTop());
-            }
+    }
+
+    private float getRandomX() {
+        float x = camera.position.x - camera.viewportWidth / 2f + (camera.viewportWidth * random.nextFloat());
+        if (x < camera.position.x - camera.viewportWidth / 2f) {
+            return camera.position.x - camera.viewportWidth / 2f;
         }
+        return x;
+    }
+
+    private float getCameraTop() {
+        return camera.position.y + camera.viewportHeight / 2f - 1;
     }
 }

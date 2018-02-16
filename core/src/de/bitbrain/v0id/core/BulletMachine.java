@@ -1,9 +1,8 @@
 package de.bitbrain.v0id.core;
 
 
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,12 +51,14 @@ public class BulletMachine {
 
     public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY) {
         final Bullet bullet = bullets.get(bulletType);
-        float top = 0f;
-        // Moved downwards, shoot down!
-        if (velocityY < 0) {
+        if (bullet == null) {
+            Gdx.app.error("bullet", "Bullet type " + bulletType + " not registered.");
+            return;
+        }
+        float top = source.getTop() + source.getHeight();
+        if (!source.hasAttribute(Attribute.PLAYER)) {
             top = source.getTop() - source.getHeight();
-        } else {
-            top = source.getTop() + source.getHeight();
+            velocityY = -velocityY;
         }
         spawn(source, source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
               top,
@@ -120,6 +121,6 @@ public class BulletMachine {
     }
 
     private void pushBack(GameObject bullet, GameObject target) {
-
+        // TODO
     }
 }

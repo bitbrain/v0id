@@ -12,8 +12,8 @@ public class Respawner {
         this.camera = camera;
     }
 
-    public void respawn(GameObject object, int health) {
-        object.setAttribute(Attribute.HEALTH, health);
+    public void respawn(GameObject object) {
+        object.setAttribute(Attribute.HEALTH, object.getAttribute(Attribute.INITIAL_HEALTH));
         object.setAttribute(Attribute.DEAD, false);
         object.setActive(true);
         object.getScale().set(1f, 1f);

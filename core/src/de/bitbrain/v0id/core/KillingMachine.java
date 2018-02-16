@@ -8,7 +8,6 @@ import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
-import de.bitbrain.v0id.GameConfig;
 
 public class KillingMachine {
 
@@ -40,7 +39,7 @@ public class KillingMachine {
                         @Override
                         public void onEvent(int i, BaseTween<?> baseTween) {
                             if (object.hasAttribute(Attribute.PLAYER)) {
-                                respawner.respawn(object, GameConfig.PLAYER_HEALTH);
+                                respawner.respawn(object);
                             } else {
                                 world.remove(object);
                             }

@@ -1,41 +1,41 @@
 package de.bitbrain.v0id.core;
 
-
-import de.bitbrain.braingdx.behavior.BehaviorAdapter;
 import de.bitbrain.braingdx.behavior.BehaviorManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
-import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.ai.RegularEnemyBehavior;
+import de.bitbrain.v0id.core.movement.MovementData;
 
 public class GameObjectFactory {
 
     private final GameWorld world;
     private final BehaviorManager behaviorManager;
-    private final BulletMachine bulletMachine;
+    private final WeaponFactory weaponFactory;
 
-    public GameObjectFactory(GameWorld world, BehaviorManager behaviorManager, BulletMachine bulletMachine) {
+    public GameObjectFactory(GameWorld world, BehaviorManager behaviorManager, WeaponFactory weaponFactory) {
         this.world = world;
         this.behaviorManager = behaviorManager;
-        this.bulletMachine = bulletMachine;
+        this.weaponFactory = weaponFactory;
     }
 
-    public GameObject spawnMeteror() {
-
+    public GameObject spawnShip(ShipSpawnTemplate template, float x, float y, boolean npc) {
         GameObject object = world.addObject(true);
-        object.setAttribute(Attribute.HEALTH, GameConfig.BLOCK_HEALTH);
-        object.setType("block");
+        object.setPosition(x, y);
+        object.setAttribute(Attribute.INITIAL_HEALTH, template.life);
+        object.setAttribute(Attribute.HEALTH, template.life);
+        object.setType(template.type);
+        object.setDimensions(64f, 64f);
+        object.setAttribute(Attribute.MOVEMENT_DATA, new MovementData(template.accellerationFactor, template.minVelocity, template.maxVelocity));
+        weaponFactory.attachWeapon(template.weapon, object);
+        if (npc) {
+            RegularEnemyBehavior behavior = new RegularEnemyBehavior();
+            behaviorManager.apply(behavior, object);
+            object.setRotation(180f);
+        }
         return object;
     }
 
-    public GameObject spawnEnemy() {
-        GameObject object = world.addObject(true);
-        object.setAttribute(Attribute.HEALTH, GameConfig.VIPER_HEALTH);
-        object.setType("viper");
-        behaviorManager.apply(new RegularEnemyBehavior(), object);
-        ShootingBehavior shootingBehavior = new ShootingBehavior();
-        shootingBehavior.addWeapon(new Weapon(BulletType.LASER, bulletMachine, 0.6f, 0.0f, -350f));
-        behaviorManager.apply(shootingBehavior, object);
-        return object;
+    public GameObject spawnShip(ShipSpawnTemplate template, float x, float y) {
+        return spawnShip(template, x, y, true);
     }
 }

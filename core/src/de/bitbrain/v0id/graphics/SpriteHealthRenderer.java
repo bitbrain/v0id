@@ -67,8 +67,8 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private int previousHealth = -1;
     private final Map<String, BooleanProvider> booleanProviders = new HashMap<String, BooleanProvider>();
 
-    public SpriteHealthRenderer(Map<Integer, String> textureMapping) {
-        this.textureMapping = textureMapping;
+    public SpriteHealthRenderer(int health, String[] textureIds) {
+        this.textureMapping = computeHealthMap(health, textureIds);
         damageTextureMapping = buildDamageTextures(textureMapping.values());
         int tmpMin = 1;
         int tmpMax = 0;
@@ -182,5 +182,9 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
             target.dispose();
         }
         return damageTextures;
+    }
+
+    private Map<Integer, String> computeHealthMap(int health, String[] textureIds) {
+        return new HashMap<Integer, String>();
     }
 }
