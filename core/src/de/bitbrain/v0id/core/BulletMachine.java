@@ -2,22 +2,22 @@ package de.bitbrain.v0id.core;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquations;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.behavior.Behavior;
 import de.bitbrain.braingdx.behavior.BehaviorAdapter;
 import de.bitbrain.braingdx.behavior.BehaviorManager;
-import de.bitbrain.braingdx.tweens.GameObjectTween;
-import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.util.Mutator;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
 import de.bitbrain.v0id.GameConfig;
+import de.bitbrain.v0id.assets.Assets;
 
 public class BulletMachine {
 
@@ -35,6 +35,8 @@ public class BulletMachine {
     }
 
     private final GameWorld gameWorld;
+
+    private final Random random = new Random();
 
     private final BehaviorManager behaviorManager;
     private final Rectangle bulletCollision = new Rectangle(), targetCollision = new Rectangle();
@@ -125,7 +127,7 @@ public class BulletMachine {
     }
 
     private void pushBack(GameObject bullet, GameObject target) {
-        final float pushDistance = 32f;
+        final float pushDistance = 4f;
         if (bullet.getLastPosition().y < bullet.getTop()) {
             // Bullet is moving up
             pushInternally(target, pushDistance);
@@ -135,11 +137,7 @@ public class BulletMachine {
     }
 
     private void pushInternally(GameObject object, float pushDistance) {
+        SharedAssetManager.getInstance().get(Assets.Sounds.HIT, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
         object.move(0f, pushDistance);
-        object.setOffset(0f, -pushDistance);
-        Tween.to(object, GameObjectTween.OFFSET_Y, 2f)
-                .target(0f)
-                .ease(TweenEquations.easeOutCubic)
-                .start(SharedTweenManager.getInstance());
     }
 }

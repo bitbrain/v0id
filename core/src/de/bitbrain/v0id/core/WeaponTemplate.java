@@ -3,6 +3,7 @@ package de.bitbrain.v0id.core;
 public class WeaponTemplate {
     public final BulletType type;
     public final String assetId;
+    public final String soundId;
     public final float frequency;
     public final float velocityX;
     public final float velocityY;
@@ -11,12 +12,14 @@ public class WeaponTemplate {
     public WeaponTemplate(//
             BulletType type,//
             String assetId,//
+            String soundId,
             float frequency,//
             float velocityX,//
             float velocityY,//
             float size) {
         this.type = type;
         this.assetId = assetId;
+        this.soundId = soundId;
         this.frequency = frequency;
         this.velocityX = velocityX;
         this.velocityY = velocityY;

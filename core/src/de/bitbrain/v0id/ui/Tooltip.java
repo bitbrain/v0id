@@ -56,7 +56,7 @@ public class Tooltip {
     }
 
     public void create(final float x, final float y, final Label.LabelStyle style, final String text, final Color color, final TweenCallback callback) {
-        create(callback, 0.6f, new TooltipFactory() {
+        create(callback, 0.9f, new TooltipFactory() {
             @Override
             public Actor create() {
                 final Label tooltip = new Label(text, style) {
@@ -92,7 +92,7 @@ public class Tooltip {
         if (lastTooltip != null && removable) {
             final Actor tooltip = lastTooltip;
             tweenManager.killTarget(lastTooltip);
-            Tween.to(tooltip, ActorTween.ALPHA, 0.6f).target(0f).setCallbackTriggers(TweenCallback.COMPLETE)
+            Tween.to(tooltip, ActorTween.ALPHA, 0.9f).target(0f).setCallbackTriggers(TweenCallback.COMPLETE)
                     .setCallback(new TweenCallback() {
                         @Override
                         public void onEvent(int type, BaseTween<?> source) {

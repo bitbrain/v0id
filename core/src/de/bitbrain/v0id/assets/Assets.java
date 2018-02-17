@@ -19,11 +19,15 @@ public interface Assets {
     }
 
     interface Musics {
-
+        String DIVE_INTO_THE_VOID = "musics/dive_into_the_void.ogg";
     }
 
     interface Sounds {
-
+        String SOUND_SHOT_01 = "sounds/shot01.ogg";
+        String DEATH = "sounds/death.ogg";
+        String EXPLODE_01 = "sounds/explode01.ogg";
+        String HIT = "sounds/hit.ogg";
+        String RESPAWN = "sounds/respawn.ogg";
     }
 
     interface Fonts {

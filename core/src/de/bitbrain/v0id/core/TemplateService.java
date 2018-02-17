@@ -13,7 +13,8 @@ public class TemplateService {
             new WeaponTemplate(
                     BulletType.PLASMA,
                     Assets.Textures.BULLET_PLASMA,
-                    0.5f,
+                    Assets.Sounds.SOUND_SHOT_01,
+                    0.35f,
                     0.0f,
                     650f,
                     35f
@@ -21,9 +22,10 @@ public class TemplateService {
             new WeaponTemplate(
                     BulletType.LASER,
                     Assets.Textures.BULLET_LASER,
+                    Assets.Sounds.SOUND_SHOT_01,
                     2.5f,
                     0.0f,
-                    650f,
+                    450f,
                     35f
             )
     };

@@ -1,13 +1,17 @@
 package de.bitbrain.v0id.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
+import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.CameraController;
@@ -50,6 +54,8 @@ public class IngameScreen extends AbstractScreen {
         camera = context.getGameCamera().getInternal();
         respawner = new Respawner(camera);
 
+        context.getScreenTransitions().in(1f);
+
         // Define game world
         context.getGameWorld().setBounds(new LevelBounds());
 
@@ -86,6 +92,12 @@ public class IngameScreen extends AbstractScreen {
         // Setup UI
         Tooltip.getInstance().init(context.getWorldStage());
         TemplateService.initSystems(bulletMachine, context);
+
+        Music music = SharedAssetManager.getInstance().get(Assets.Musics.DIVE_INTO_THE_VOID, Music.class);
+
+        music.setLooping(true);
+        AudioManager.getInstance().setVolume(0.3f);
+        AudioManager.getInstance().fadeInMusic(music, 10f);
     }
 
     @Override

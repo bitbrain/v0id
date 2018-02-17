@@ -14,7 +14,7 @@ public class WeaponFactory {
     }
 
     public Weapon attachWeapon(WeaponTemplate weaponTemplate, GameObject object) {
-        Weapon weapon = new Weapon(weaponTemplate.type, bulletMachine, weaponTemplate.frequency, weaponTemplate.velocityX, weaponTemplate.velocityY);
+        Weapon weapon = new Weapon(weaponTemplate.type, weaponTemplate.soundId, bulletMachine, weaponTemplate.frequency, weaponTemplate.velocityX, weaponTemplate.velocityY);
         ShootingBehavior shootingBehavior = new ShootingBehavior();
         shootingBehavior.addWeapon(weapon);
         behaviorManager.apply(shootingBehavior, object);

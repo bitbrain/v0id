@@ -55,5 +55,14 @@ public class PlayerMovement {
         if (player.getTop() - player.getHeight() < camera.position.y - camera.viewportHeight / 2f) {
             killingMachine.kill(player);
         }
+        if (player.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
+            player.setPosition(camera.position.x - camera.viewportWidth / 2f, player.getTop());
+        }
+        if (player.getRight() > camera.position.x + camera.viewportWidth / 2f) {
+            player.setPosition(camera.position.x + camera.viewportWidth / 2f - player.getWidth(), player.getTop());
+        }
+        if (player.getTop() > camera.position.y + camera.viewportHeight / 4f) {
+            player.setPosition(player.getLeft(), camera.position.y + camera.viewportHeight / 4f);
+        }
     }
 }
