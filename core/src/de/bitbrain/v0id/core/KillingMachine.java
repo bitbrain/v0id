@@ -31,7 +31,7 @@ public class KillingMachine {
             object.setAttribute(Attribute.HEALTH, 0);
             object.setAttribute(Attribute.DEAD, true);
             object.setActive(false);
-            ScreenShake.shake(3f, 1f);
+            ScreenShake.shake(4.5f, 1.5f);
             Tween.to(object, GameObjectTween.ALPHA, DEATH_DURATION)
                     .target(0f)
                     .ease(TweenEquations.easeOutCubic)

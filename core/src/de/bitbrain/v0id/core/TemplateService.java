@@ -21,7 +21,7 @@ public class TemplateService {
             new WeaponTemplate(
                     BulletType.LASER,
                     Assets.Textures.BULLET_LASER,
-                    0.5f,
+                    2.5f,
                     0.0f,
                     650f,
                     35f

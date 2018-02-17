@@ -107,7 +107,7 @@ public class BulletMachine {
                 }
                 bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
                 targetCollision.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
-                if (bulletCollision.overlaps(targetCollision)) {
+                if (bulletCollision.overlaps(targetCollision) || targetCollision.contains(bulletCollision)) {
                     if (target.hasAttribute(Attribute.HEALTH)) {
                         Integer health = (Integer)target.getAttribute(Attribute.HEALTH);
                         if (health > 1) {
