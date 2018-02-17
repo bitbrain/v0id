@@ -8,8 +8,12 @@ import de.bitbrain.braingdx.assets.SharedAssetManager;
 
 public class BitmapFontBaker {
 
-    public static BitmapFont bake(String fontPath, FreeTypeFontGenerator.FreeTypeFontParameter config) {
+    public static BitmapFont bake(String fontPath, int size) {
         FreeTypeFontGenerator generator = SharedAssetManager.getInstance().get(fontPath, FreeTypeFontGenerator.class);
-        return generator.generateFont(config);
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.color = Color.WHITE;
+        param.mono = false;
+        param.size = size;
+        return generator.generateFont(param);
     }
 }

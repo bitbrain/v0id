@@ -1,14 +1,8 @@
 package de.bitbrain.v0id;
 
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +14,7 @@ import de.bitbrain.braingdx.assets.SmartAssetLoader;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.screens.IngameScreen;
+import de.bitbrain.v0id.ui.Styles;
 
 public class V0idGame extends BrainGdxGame {
 
@@ -40,6 +35,7 @@ public class V0idGame extends BrainGdxGame {
 
     @Override
     protected AbstractScreen<?> getInitialScreen() {
+        Styles.init();
         return new IngameScreen(this);
     }
 }

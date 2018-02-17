@@ -7,9 +7,13 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import de.bitbrain.braingdx.behavior.Behavior;
 import de.bitbrain.braingdx.behavior.BehaviorAdapter;
 import de.bitbrain.braingdx.behavior.BehaviorManager;
+import de.bitbrain.braingdx.tweens.GameObjectTween;
+import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.util.Mutator;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
@@ -121,6 +125,21 @@ public class BulletMachine {
     }
 
     private void pushBack(GameObject bullet, GameObject target) {
-        // TODO
+        final float pushDistance = 32f;
+        if (bullet.getLastPosition().y < bullet.getTop()) {
+            // Bullet is moving up
+            pushInternally(target, pushDistance);
+        } else {
+            pushInternally(target, -pushDistance);
+        }
+    }
+
+    private void pushInternally(GameObject object, float pushDistance) {
+        object.move(0f, pushDistance);
+        object.setOffset(0f, -pushDistance);
+        Tween.to(object, GameObjectTween.OFFSET_Y, 2f)
+                .target(0f)
+                .ease(TweenEquations.easeOutCubic)
+                .start(SharedTweenManager.getInstance());
     }
 }

@@ -8,6 +8,9 @@ import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
+import de.bitbrain.v0id.graphics.ScreenShake;
+import de.bitbrain.v0id.ui.Styles;
+import de.bitbrain.v0id.ui.Tooltip;
 
 public class KillingMachine {
 
@@ -24,9 +27,11 @@ public class KillingMachine {
 
     public void kill(final GameObject object) {
         if (!object.hasAttribute(Attribute.DEAD) || object.getAttribute(Attribute.DEAD).equals(false)) {
+            Tooltip.getInstance().create(object, Styles.LABEL_TEXT_TOOLTIP, "KILLED!");
             object.setAttribute(Attribute.HEALTH, 0);
             object.setAttribute(Attribute.DEAD, true);
             object.setActive(false);
+            ScreenShake.shake(3f, 1f);
             Tween.to(object, GameObjectTween.ALPHA, DEATH_DURATION)
                     .target(0f)
                     .ease(TweenEquations.easeOutCubic)
