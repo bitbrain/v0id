@@ -67,11 +67,11 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private int previousHealth = -1;
     private final Map<String, BooleanProvider> booleanProviders = new HashMap<String, BooleanProvider>();
 
-    public SpriteHealthRenderer(int health, String[] textureIds) {
+    public SpriteHealthRenderer(int health, String ... textureIds) {
         this.textureMapping = computeHealthMap(health, textureIds);
         damageTextureMapping = buildDamageTextures(textureMapping.values());
         int tmpMin = 1;
-        int tmpMax = 0;
+        int tmpMax = 1;
         for (Integer value : textureMapping.keySet()) {
             if (value > tmpMax) {
                 tmpMax = value;
@@ -185,6 +185,12 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     }
 
     private Map<Integer, String> computeHealthMap(int health, String[] textureIds) {
-        return new HashMap<Integer, String>();
+        Map<Integer, String> map =  new HashMap<Integer, String>();
+        for (int i = 0; i < health; ++i) {
+            float percentage = (float)i / (float)(health - 1);
+            String texture = textureIds[(int)((textureIds.length - 1) * percentage)];
+            map.put(i, texture);
+        }
+        return map;
     }
 }

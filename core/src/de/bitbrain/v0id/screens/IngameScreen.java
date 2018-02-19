@@ -3,6 +3,9 @@ package de.bitbrain.v0id.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.utils.Array;
 
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
@@ -98,6 +101,11 @@ public class IngameScreen extends AbstractScreen {
         music.setLooping(true);
         AudioManager.getInstance().setVolume(0.3f);
         AudioManager.getInstance().fadeInMusic(music, 10f);
+
+        ParticleEffect effect = SharedAssetManager.getInstance().get(Assets.Particles.SLIME, ParticleEffect.class);
+        ParticleEffectPool effectPool = new ParticleEffectPool(effect, 50, 200);
+        Array<ParticleEffectPool.PooledEffect> additiveEffects;
+        Array<ParticleEffectPool.PooledEffect> normalEffects;
     }
 
     @Override

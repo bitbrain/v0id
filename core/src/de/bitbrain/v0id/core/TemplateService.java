@@ -4,6 +4,7 @@ package de.bitbrain.v0id.core;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
 import de.bitbrain.v0id.assets.Assets;
+import de.bitbrain.v0id.graphics.SpriteHealthRenderer;
 
 public class TemplateService {
 
@@ -66,7 +67,7 @@ public class TemplateService {
             context.getRenderManager().register(template.type, new SpriteRenderer(template.assetId));
         }
         for (ShipSpawnTemplate template : shipTemplates) {
-            context.getRenderManager().register(template.type, new SpriteRenderer(template.assetIds[0]));
+            context.getRenderManager().register(template.type, new SpriteHealthRenderer(template.life, template.assetIds));
         }
     }
 }

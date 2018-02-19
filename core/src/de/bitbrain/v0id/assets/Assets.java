@@ -18,6 +18,10 @@ public interface Assets {
         String UI_FOREGROUND_HEALTH = "textures/ui-bar-foreground-health.9.png";
     }
 
+    interface Particles {
+        String SLIME = "particles/slime.p";
+    }
+
     interface Musics {
         String DIVE_INTO_THE_VOID = "musics/dive_into_the_void.ogg";
     }
