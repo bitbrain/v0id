@@ -3,14 +3,13 @@ package de.bitbrain.v0id.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.audio.AudioManager;
+import de.bitbrain.braingdx.graphics.pipeline.AbstractRenderLayer;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
@@ -26,6 +25,7 @@ import de.bitbrain.v0id.core.WeaponFactory;
 import de.bitbrain.v0id.core.movement.ObjectMover;
 import de.bitbrain.v0id.graphics.Colors;
 import de.bitbrain.v0id.graphics.ParallaxRenderLayer;
+import de.bitbrain.v0id.graphics.ParticleManager;
 import de.bitbrain.v0id.graphics.StarTextureFactory;
 import de.bitbrain.v0id.input.PlayerMovement;
 import de.bitbrain.v0id.levelgen.LevelBounds;
@@ -48,6 +48,8 @@ public class IngameScreen extends AbstractScreen {
 
     private WorldGenerator worldGenerator;
 
+    private ParticleManager particleManager;
+
     public IngameScreen(BrainGdxGame game) {
         super(game);
     }
@@ -56,6 +58,8 @@ public class IngameScreen extends AbstractScreen {
     protected void onCreate(GameContext context) {
         camera = context.getGameCamera().getInternal();
         respawner = new Respawner(camera);
+
+        particleManager = new ParticleManager(context.getBehaviorManager());
 
         context.getScreenTransitions().in(1f);
 
@@ -67,6 +71,16 @@ public class IngameScreen extends AbstractScreen {
         ParallaxRenderLayer backgroundLayer = new ParallaxRenderLayer(context.getGameCamera().getInternal());
         context.getRenderPipeline().set(RenderPipeIds.BACKGROUND, backgroundLayer );
 
+        context.getRenderPipeline().set(RenderPipeIds.LIGHTING, new AbstractRenderLayer() {
+
+            @Override
+            public void render(Batch batch, float delta) {
+                batch.begin();
+                particleManager.draw(batch, delta);
+                batch.end();
+            }
+        });
+
         backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 3,30), 0.98f).setAlpha(0.5f);
         backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 4,17), 0.85f).setAlpha(0.55f);
         backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 5,12), 0.72f).setAlpha(0.6f);
@@ -76,7 +90,7 @@ public class IngameScreen extends AbstractScreen {
 
         // Setup weapon systems
         KillingMachine killingMachine = new KillingMachine(context.getGameWorld(), respawner);
-        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), killingMachine);
+        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), killingMachine, particleManager);
         WeaponFactory weaponFactory = new WeaponFactory(bulletMachine, context.getBehaviorManager());
 
         ObjectMover mover = new ObjectMover();
@@ -101,11 +115,6 @@ public class IngameScreen extends AbstractScreen {
         music.setLooping(true);
         AudioManager.getInstance().setVolume(0.3f);
         AudioManager.getInstance().fadeInMusic(music, 10f);
-
-        ParticleEffect effect = SharedAssetManager.getInstance().get(Assets.Particles.SLIME, ParticleEffect.class);
-        ParticleEffectPool effectPool = new ParticleEffectPool(effect, 50, 200);
-        Array<ParticleEffectPool.PooledEffect> additiveEffects;
-        Array<ParticleEffectPool.PooledEffect> normalEffects;
     }
 
     @Override

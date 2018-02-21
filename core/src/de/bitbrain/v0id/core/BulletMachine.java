@@ -18,6 +18,7 @@ import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
 import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
+import de.bitbrain.v0id.graphics.ParticleManager;
 
 public class BulletMachine {
 
@@ -43,10 +44,13 @@ public class BulletMachine {
 
     private final KillingMachine killingMachine;
 
-    public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, KillingMachine killingMachine) {
+    private final ParticleManager particleManager;
+
+    public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, KillingMachine killingMachine, ParticleManager particleManager) {
         this.gameWorld = gameWorld;
         this.behaviorManager = behaviorManager;
         this.killingMachine = killingMachine;
+        this.particleManager = particleManager;
     }
 
     private final Map<BulletType, Bullet> bullets = new HashMap<BulletType, Bullet>();
@@ -107,6 +111,10 @@ public class BulletMachine {
                 if (sourceType instanceof BulletType && targetType instanceof BulletType) {
                     return;
                 }
+                if (targetType instanceof BulletType) {
+                    // Ignore target bullets
+                    return;
+                }
                 bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
                 targetCollision.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
                 if (bulletCollision.overlaps(targetCollision) || targetCollision.contains(bulletCollision)) {
@@ -118,6 +126,9 @@ public class BulletMachine {
                         } else {
                             killingMachine.kill(target);
                         }
+                        particleManager.attachEffect(Assets.Particles.SLIME, target,
+                                source.getLeft() - target.getLeft() + target.getWidth() / 2f,
+                                source.getTop() - target.getTop() + target.getHeight() / 2f);
                     }
                     gameWorld.remove(source);
                 }

@@ -24,7 +24,7 @@ public class TemplateService {
                     BulletType.LASER,
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
-                    2.5f,
+                    1.5f,
                     0.0f,
                     450f,
                     35f
