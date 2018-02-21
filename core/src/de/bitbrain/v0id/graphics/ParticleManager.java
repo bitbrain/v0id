@@ -78,7 +78,7 @@ public class ParticleManager {
         ParticleEffectPool pool = pools.get(particleId);
         if (pool == null) {
             ParticleEffect effect = SharedAssetManager.getInstance().get(particleId, ParticleEffect.class);
-            pool = new ParticleEffectPool(effect, 50, 500);
+            pool = new ParticleEffectPool(effect, 100, 500);
             pools.put(particleId, pool);
         }
         InternalPooledEffect effect = new InternalPooledEffect(particleId, pool.obtain());
@@ -91,6 +91,7 @@ public class ParticleManager {
     private void freeEffect(InternalPooledEffect effect) {
         ParticleEffectPool pool = pools.get(effect.assetId);
         if (pool != null) {
+            effect.effect.free();
             effects.remove(effect);
             pool.free(effect.effect);
         } else {

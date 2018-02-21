@@ -20,6 +20,8 @@ public interface Assets {
 
     interface Particles {
         String SLIME = "particles/slime.p";
+        String SLIME_RED = "particles/slime-red.p";
+        String EXPLOSION = "particles/explosion.p";
     }
 
     interface Musics {

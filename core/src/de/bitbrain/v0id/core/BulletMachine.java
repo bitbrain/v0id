@@ -59,7 +59,7 @@ public class BulletMachine {
         bullets.put(type, new Bullet(size));
     }
 
-    public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY) {
+    public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY, String hitParticleEffectId) {
         final Bullet bullet = bullets.get(bulletType);
         if (bullet == null) {
             Gdx.app.error("bullet", "Bullet type " + bulletType + " not registered.");
@@ -72,10 +72,10 @@ public class BulletMachine {
         }
         spawn(source, source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
               top,
-              bulletType, velocityX, velocityY);
+              bulletType, velocityX, velocityY, hitParticleEffectId);
     }
 
-    private void spawn(GameObject source, final float x, final float y, final BulletType bulletType, float velocityX, float velocityY) {
+    private void spawn(GameObject source, final float x, final float y, final BulletType bulletType, float velocityX, float velocityY, String hitParticleEffectId) {
         final Bullet bullet = bullets.get(bulletType);
         GameObject bulletObject = gameWorld.addObject(new Mutator<GameObject>() {
             @Override
@@ -85,10 +85,10 @@ public class BulletMachine {
                 target.setType(bulletType);
             }
         }, true);
-        behaviorManager.apply(createBehavior(source, velocityX, velocityY), bulletObject);
+        behaviorManager.apply(createBehavior(source, velocityX, velocityY, hitParticleEffectId), bulletObject);
     }
 
-    private Behavior createBehavior(final GameObject source, final float velocityX, final float velocityY) {
+    private Behavior createBehavior(final GameObject source, final float velocityX, final float velocityY, final String hitParticleEffectId) {
         return new BehaviorAdapter() {
             @Override
             public void update(GameObject source, float delta) {
@@ -126,9 +126,9 @@ public class BulletMachine {
                         } else {
                             killingMachine.kill(target);
                         }
-                        particleManager.attachEffect(Assets.Particles.SLIME, target,
-                                source.getLeft() - target.getLeft() + target.getWidth() / 2f,
-                                source.getTop() - target.getTop() + target.getHeight() / 2f);
+                        particleManager.attachEffect(hitParticleEffectId, target,
+                                source.getLeft() - target.getLeft() + source.getWidth() / 2f,
+                                source.getTop() - target.getTop() + source.getHeight() / 2f);
                     }
                     gameWorld.remove(source);
                 }

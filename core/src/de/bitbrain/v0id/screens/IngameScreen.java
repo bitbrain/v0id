@@ -89,7 +89,7 @@ public class IngameScreen extends AbstractScreen {
         cameraController = new CameraController(context.getGameCamera());
 
         // Setup weapon systems
-        KillingMachine killingMachine = new KillingMachine(context.getGameWorld(), respawner);
+        KillingMachine killingMachine = new KillingMachine(context.getGameWorld(), respawner, particleManager);
         bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), killingMachine, particleManager);
         WeaponFactory weaponFactory = new WeaponFactory(bulletMachine, context.getBehaviorManager());
 
