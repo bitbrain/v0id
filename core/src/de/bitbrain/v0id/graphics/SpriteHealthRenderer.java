@@ -125,12 +125,9 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         if (provider != null) {
             SharedTweenManager.getInstance().killTarget(provider);
             booleanProviders.remove(object.getId());
-        } else {
-            System.out.println("Do not remove. Nothing there");
         }
         provider = new BooleanProvider();
         booleanProviders.put(object.getId(), provider);
-        System.out.println("Create it " + object.getId());
         provider.setValue(true);
         Tween.to(provider, 0, FLICKER_DURATION)
                 .target(1f, 0f)
@@ -139,7 +136,6 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
                 .setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int i, BaseTween<?> baseTween) {
-                        System.out.println("Remove it " + object.getId());
                         booleanProviders.remove(object.getId());
                     }
                 })

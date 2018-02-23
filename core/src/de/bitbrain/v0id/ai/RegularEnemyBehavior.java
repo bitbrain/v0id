@@ -1,6 +1,6 @@
 package de.bitbrain.v0id.ai;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 
 import java.util.Random;
 
@@ -13,12 +13,18 @@ public class RegularEnemyBehavior extends BehaviorAdapter {
 
     private float velocity = 0f;
 
+    private final Camera camera;
+
+    public RegularEnemyBehavior(Camera camera) {
+        this.camera = camera;
+    }
+
     @Override
     public void update(GameObject source, float delta) {
         super.update(source, delta);
-        final float factor = 1f;
-        velocity += source.getLeft() < Gdx.graphics.getWidth() / 2f ? factor * random.nextFloat() : -factor * random.nextFloat();
-        source.setPosition(source.getLeft() + 15f * velocity * delta, source.getTop() - 40f * delta);
+        final float factor = 2.5f;
+        velocity += source.getLeft() < camera.position.x ? factor * random.nextFloat() : -factor * random.nextFloat();
+        source.setPosition(source.getLeft() + 15f * velocity * delta, source.getTop() - 140f * delta);
     }
 
     @Override

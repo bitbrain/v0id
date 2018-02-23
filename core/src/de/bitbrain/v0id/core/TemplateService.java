@@ -16,7 +16,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_PLASMA,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME,
-                    5.35f,
+                    0.15f,
                     0.0f,
                     650f,
                     35f
@@ -26,7 +26,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    1.5f,
+                    0.5f,
                     0.0f,
                     450f,
                     35f
@@ -41,9 +41,9 @@ public class TemplateService {
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_VIPER},
                     GameObjectType.VIPER,
-                    5,
+                    3,
                     1f,
-                    .3f,
+                    2.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     500f,

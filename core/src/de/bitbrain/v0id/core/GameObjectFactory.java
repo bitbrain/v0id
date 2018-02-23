@@ -1,25 +1,22 @@
 package de.bitbrain.v0id.core;
 
-import de.bitbrain.braingdx.behavior.BehaviorManager;
+import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.world.GameObject;
-import de.bitbrain.braingdx.world.GameWorld;
 import de.bitbrain.v0id.ai.RegularEnemyBehavior;
 import de.bitbrain.v0id.core.movement.MovementData;
 
 public class GameObjectFactory {
 
-    private final GameWorld world;
-    private final BehaviorManager behaviorManager;
+    private final GameContext context;
     private final WeaponFactory weaponFactory;
 
-    public GameObjectFactory(GameWorld world, BehaviorManager behaviorManager, WeaponFactory weaponFactory) {
-        this.world = world;
-        this.behaviorManager = behaviorManager;
+    public GameObjectFactory(GameContext context, WeaponFactory weaponFactory) {
+        this.context = context;
         this.weaponFactory = weaponFactory;
     }
 
     public GameObject spawnShip(ShipSpawnTemplate template, float x, float y, boolean npc) {
-        GameObject object = world.addObject(true);
+        GameObject object = context.getGameWorld().addObject(true);
         object.setPosition(x, y);
         object.setAttribute(Attribute.INITIAL_HEALTH, template.life);
         object.setAttribute(Attribute.HEALTH, template.life);
@@ -28,8 +25,8 @@ public class GameObjectFactory {
         object.setAttribute(Attribute.MOVEMENT_DATA, new MovementData(template.accellerationFactor, template.minVelocity, template.maxVelocity));
         weaponFactory.attachWeapon(template.weapon, object);
         if (npc) {
-            RegularEnemyBehavior behavior = new RegularEnemyBehavior();
-            behaviorManager.apply(behavior, object);
+            RegularEnemyBehavior behavior = new RegularEnemyBehavior(context.getGameCamera().getInternal());
+            context.getBehaviorManager().apply(behavior, object);
             object.setRotation(180f);
         }
         return object;

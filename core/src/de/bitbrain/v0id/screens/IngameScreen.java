@@ -50,13 +50,20 @@ public class IngameScreen extends AbstractScreen {
 
     private ParticleManager particleManager;
 
+    private GameContext context;
+
+    private boolean resetCameraY = false;
+
     public IngameScreen(BrainGdxGame game) {
         super(game);
     }
 
     @Override
     protected void onCreate(GameContext context) {
+        this.context = context;
         camera = context.getGameCamera().getInternal();
+        camera.position.x = 0;
+        camera.position.y = 0;
         respawner = new Respawner(camera);
 
         particleManager = new ParticleManager(context.getBehaviorManager());
@@ -97,7 +104,7 @@ public class IngameScreen extends AbstractScreen {
         context.getBehaviorManager().apply(mover);
 
         // Setup player
-        GameObjectFactory factory = new GameObjectFactory(context.getGameWorld(), context.getBehaviorManager(), weaponFactory);
+        GameObjectFactory factory = new GameObjectFactory(context, weaponFactory);
         GameObject player = factory.spawnShip(TemplateService.shipTemplates[1], 0f, 0f, false);
         player.setAttribute(Attribute.PLAYER, true);
         movement = new PlayerMovement(player, mover, killingMachine, context.getGameCamera().getInternal());
@@ -119,6 +126,10 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
+        if (!resetCameraY) {
+            resetCameraY = true;
+            camera.position.y = 0;
+        }
         movement.update(delta);
         worldGenerator.update(delta);
         cameraController.update(delta);
