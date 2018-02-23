@@ -102,7 +102,10 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
             Texture texture = getTexture(object, (Integer)health);
             if (texture != null) {
                 Sprite sprite = new Sprite(texture);
+                // Hack to retrieve dynamic size
+                object.setDimensions(sprite.getWidth() * 4f, sprite.getHeight() * 4f);
                 sprite.setColor(object.getColor());
+                sprite.setRotation(object.getRotation());
                 sprite.setOrigin(object.getWidth() / 2f, object.getHeight() / 2f);
                 sprite.setBounds(object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
                 sprite.setScale(object.getScale().x);

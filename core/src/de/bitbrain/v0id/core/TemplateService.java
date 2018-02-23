@@ -60,6 +60,18 @@ public class TemplateService {
                     0f,
                     500f,
                     26.3f
+            ),
+            // DESTROYER
+            new ShipSpawnTemplate(
+                    new String[]{Assets.Textures.SHIP_DESTROYER},
+                    GameObjectType.DESTROYER,
+                    6,
+                    1f,
+                    10.3f,
+                    weaponTemplates[1], // LASER CANNON
+                    0f,
+                    100f,
+                    6.3f
             )
     };
 

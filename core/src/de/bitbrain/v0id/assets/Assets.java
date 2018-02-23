@@ -4,6 +4,7 @@ public interface Assets {
 
     interface Textures {
         // GAME OBJECTS
+        String SHIP_DESTROYER = "textures/destroyer.png";
         String SHIP_RAIDER = "textures/raider.png";
         String SHIP_VIPER = "textures/viper.png";
         String BULLET_PLASMA = "textures/plasma.png";

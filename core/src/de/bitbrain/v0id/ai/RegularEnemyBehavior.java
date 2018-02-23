@@ -20,6 +20,16 @@ public class RegularEnemyBehavior extends BehaviorAdapter {
     }
 
     @Override
+    public void onAttach(GameObject source) {
+        System.out.println("Attaching " + source.getId());
+    }
+
+    @Override
+    public void onDetach(GameObject source) {
+        System.out.println("Detaching " + source.getId());
+    }
+
+    @Override
     public void update(GameObject source, float delta) {
         super.update(source, delta);
         final float factor = 2.5f;

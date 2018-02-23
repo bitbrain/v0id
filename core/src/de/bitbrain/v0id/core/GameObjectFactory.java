@@ -21,7 +21,6 @@ public class GameObjectFactory {
         object.setAttribute(Attribute.INITIAL_HEALTH, template.life);
         object.setAttribute(Attribute.HEALTH, template.life);
         object.setType(template.type);
-        object.setDimensions(64f, 64f);
         object.setAttribute(Attribute.MOVEMENT_DATA, new MovementData(template.accellerationFactor, template.minVelocity, template.maxVelocity));
         weaponFactory.attachWeapon(template.weapon, object);
         if (npc) {
