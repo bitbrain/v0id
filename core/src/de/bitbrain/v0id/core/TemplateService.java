@@ -16,7 +16,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_PLASMA,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME,
-                    0.35f,
+                    5.35f,
                     0.0f,
                     650f,
                     35f
@@ -43,7 +43,7 @@ public class TemplateService {
                     GameObjectType.VIPER,
                     5,
                     1f,
-                    7f,
+                    .3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     500f,

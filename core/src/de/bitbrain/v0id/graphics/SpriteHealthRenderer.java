@@ -64,7 +64,6 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private final Map<Integer, String> textureMapping;
     private final Map<String, Texture> damageTextureMapping;
     private final int minHealth, maxHealth;
-    private int previousHealth = -1;
     private final Map<String, BooleanProvider> booleanProviders = new HashMap<String, BooleanProvider>();
 
     public SpriteHealthRenderer(int health, String ... textureIds) {
@@ -93,7 +92,11 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     public void render(GameObject object, Batch batch, float delta) {
         Object health = object.getAttribute(Attribute.HEALTH);
         if (health != null && health instanceof Integer) {
-            if ((Integer)health < previousHealth && previousHealth > 0f && (Integer)health > 0) {
+            Object previousHealth = object.getAttribute(Attribute.PREVIOUS_HEALTH);
+            if (previousHealth == null) {
+                previousHealth = health;
+            }
+            if ((Integer)health < (Integer)previousHealth && (Integer)health > 0) {
                 triggerDamageAnimation(object);
             }
             Texture texture = getTexture(object, (Integer)health);
@@ -105,7 +108,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
                 sprite.setScale(object.getScale().x);
                 sprite.draw(batch);
             }
-            previousHealth = (Integer)health;
+            object.setAttribute(Attribute.PREVIOUS_HEALTH, health);
         }
     }
 
@@ -122,9 +125,12 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
         if (provider != null) {
             SharedTweenManager.getInstance().killTarget(provider);
             booleanProviders.remove(object.getId());
+        } else {
+            System.out.println("Do not remove. Nothing there");
         }
         provider = new BooleanProvider();
         booleanProviders.put(object.getId(), provider);
+        System.out.println("Create it " + object.getId());
         provider.setValue(true);
         Tween.to(provider, 0, FLICKER_DURATION)
                 .target(1f, 0f)
@@ -133,6 +139,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
                 .setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int i, BaseTween<?> baseTween) {
+                        System.out.println("Remove it " + object.getId());
                         booleanProviders.remove(object.getId());
                     }
                 })

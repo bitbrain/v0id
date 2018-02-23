@@ -88,7 +88,7 @@ public class BulletMachine {
         behaviorManager.apply(createBehavior(source, velocityX, velocityY, hitParticleEffectId), bulletObject);
     }
 
-    private Behavior createBehavior(final GameObject source, final float velocityX, final float velocityY, final String hitParticleEffectId) {
+    private Behavior createBehavior(final GameObject sender, final float velocityX, final float velocityY, final String hitParticleEffectId) {
         return new BehaviorAdapter() {
             @Override
             public void update(GameObject source, float delta) {
@@ -111,8 +111,12 @@ public class BulletMachine {
                 if (sourceType instanceof BulletType && targetType instanceof BulletType) {
                     return;
                 }
+                // Ignore target bullets
                 if (targetType instanceof BulletType) {
-                    // Ignore target bullets
+                    return;
+                }
+                // Ignore the same kind
+                if (sender.getAttribute(Attribute.PLAYER) == target.getAttribute(Attribute.PLAYER)) {
                     return;
                 }
                 bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
