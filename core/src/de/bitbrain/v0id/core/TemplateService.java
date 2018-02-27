@@ -26,7 +26,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    0.5f,
+                    1.5f,
                     0.0f,
                     450f,
                     35f
@@ -37,17 +37,18 @@ public class TemplateService {
     // = = = ENEMY SYSTEMS = = =
 
     public static final ShipSpawnTemplate[] shipTemplates = {
-            // VIPER
+
+            // DESTROYER
             new ShipSpawnTemplate(
-                    new String[]{Assets.Textures.SHIP_VIPER},
-                    GameObjectType.VIPER,
-                    3,
+                    new String[]{Assets.Textures.SHIP_DESTROYER},
+                    GameObjectType.DESTROYER,
+                    6,
                     1f,
-                    2.3f,
+                    10.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
-                    500f,
-                    26.3f
+                    100f,
+                    6.3f
             ),
             // RAIDER
             new ShipSpawnTemplate(
@@ -61,16 +62,29 @@ public class TemplateService {
                     500f,
                     26.3f
             ),
-            // DESTROYER
+
+            // VIPER
             new ShipSpawnTemplate(
-                    new String[]{Assets.Textures.SHIP_DESTROYER},
-                    GameObjectType.DESTROYER,
-                    6,
+                    new String[]{Assets.Textures.SHIP_VIPER},
+                    GameObjectType.VIPER,
+                    3,
                     1f,
-                    10.3f,
+                    2.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
-                    100f,
+                    300f,
+                    26.3f
+            ),
+            // BOMBER
+            new ShipSpawnTemplate(
+                    new String[]{Assets.Textures.SHIP_BOMBER},
+                    GameObjectType.BOMBER,
+                    10,
+                    1f,
+                    1.3f,
+                    null, // no weapon
+                    0f,
+                    50f,
                     6.3f
             )
     };

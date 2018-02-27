@@ -172,6 +172,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private Map<String, Texture> buildDamageTextures(Collection<String> textureIds) {
         Map<String, Texture> damageTextures = new HashMap<String, Texture>();
         for (String textureId : textureIds) {
+            System.out.println(textureId);
             Texture texture = SharedAssetManager.getInstance().get(textureId, Texture.class);
             Pixmap target = new Pixmap(texture.getWidth(), texture.getHeight(), Pixmap.Format.RGBA8888);
             target.setColor(Color.WHITE);
@@ -186,6 +187,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
             }
             damageTextures.put(textureId, new Texture(target));
             target.dispose();
+            source.dispose();
         }
         return damageTextures;
     }

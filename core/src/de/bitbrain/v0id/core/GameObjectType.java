@@ -4,6 +4,5 @@ public enum GameObjectType {
     VIPER,
     RAIDER,
     DESTROYER,
-    BULLET,
-    BLOCK;
+    BOMBER;
 }

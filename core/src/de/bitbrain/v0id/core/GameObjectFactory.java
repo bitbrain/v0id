@@ -22,7 +22,9 @@ public class GameObjectFactory {
         object.setAttribute(Attribute.HEALTH, template.life);
         object.setType(template.type);
         object.setAttribute(Attribute.MOVEMENT_DATA, new MovementData(template.accellerationFactor, template.minVelocity, template.maxVelocity));
-        weaponFactory.attachWeapon(template.weapon, object);
+        if (template.weapon != null) {
+            weaponFactory.attachWeapon(template.weapon, object);
+        }
         if (npc) {
             RegularEnemyBehavior behavior = new RegularEnemyBehavior(context.getGameCamera().getInternal());
             context.getBehaviorManager().apply(behavior, object);
