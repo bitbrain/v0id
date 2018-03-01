@@ -1,5 +1,6 @@
 package de.bitbrain.v0id;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
@@ -15,6 +16,8 @@ import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.screens.IngameScreen;
 import de.bitbrain.v0id.ui.Styles;
+
+import static com.badlogic.gdx.Application.LOG_DEBUG;
 
 public class V0idGame extends BrainGdxGame {
 
@@ -35,6 +38,9 @@ public class V0idGame extends BrainGdxGame {
 
     @Override
     protected AbstractScreen<?> getInitialScreen() {
+        if (GameConfig.DEBUG_MODE) {
+            Gdx.app.setLogLevel(LOG_DEBUG);
+        }
         Styles.init();
         return new IngameScreen(this);
     }

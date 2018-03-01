@@ -13,6 +13,7 @@ import de.bitbrain.braingdx.graphics.pipeline.AbstractRenderLayer;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
@@ -31,6 +32,8 @@ import de.bitbrain.v0id.input.PlayerMovement;
 import de.bitbrain.v0id.levelgen.LevelBounds;
 import de.bitbrain.v0id.levelgen.WorldGenerator;
 import de.bitbrain.v0id.ui.Tooltip;
+
+import static com.badlogic.gdx.Application.LOG_DEBUG;
 
 public class IngameScreen extends AbstractScreen {
 

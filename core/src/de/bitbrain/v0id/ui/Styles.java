@@ -1,5 +1,6 @@
 package de.bitbrain.v0id.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import de.bitbrain.v0id.assets.Assets;
@@ -8,6 +9,7 @@ import de.bitbrain.v0id.graphics.Colors;
 
 public class Styles {
 
+    public static final Label.LabelStyle DEBUG_TEXT_SMALL = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_TEXT_MEDIUM = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_TEXT_TOOLTIP = new Label.LabelStyle();
 
@@ -16,5 +18,7 @@ public class Styles {
         LABEL_TEXT_MEDIUM.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 26);
         LABEL_TEXT_TOOLTIP.fontColor = Colors.NEON_CHRIMSON;
         LABEL_TEXT_TOOLTIP.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 46);
+        DEBUG_TEXT_SMALL.fontColor = Color.WHITE;
+        DEBUG_TEXT_SMALL.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 16);
     }
 }

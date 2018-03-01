@@ -44,7 +44,7 @@ public class TemplateService {
                     GameObjectType.DESTROYER,
                     6,
                     1f,
-                    10.3f,
+                    12.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     100f,
@@ -69,7 +69,7 @@ public class TemplateService {
                     GameObjectType.VIPER,
                     3,
                     1f,
-                    2.3f,
+                    4.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     300f,
@@ -81,7 +81,7 @@ public class TemplateService {
                     GameObjectType.BOMBER,
                     10,
                     1f,
-                    1.3f,
+                    7f,
                     null, // no weapon
                     0f,
                     50f,

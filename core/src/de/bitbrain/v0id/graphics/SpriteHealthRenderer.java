@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Disposable;
 
 import java.util.Collection;
@@ -20,7 +21,9 @@ import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.graphics.GameObjectRenderManager;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.core.Attribute;
+import de.bitbrain.v0id.ui.Styles;
 
 public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectRenderer, Disposable {
 
@@ -66,6 +69,8 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private final int minHealth, maxHealth;
     private final Map<String, BooleanProvider> booleanProviders = new HashMap<String, BooleanProvider>();
 
+    private final Label DEBUG_TEXT = new Label("", Styles.DEBUG_TEXT_SMALL);
+
     public SpriteHealthRenderer(int health, String ... textureIds) {
         this.textureMapping = computeHealthMap(health, textureIds);
         damageTextureMapping = buildDamageTextures(textureMapping.values());
@@ -110,6 +115,11 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
                 sprite.setBounds(object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
                 sprite.setScale(object.getScale().x);
                 sprite.draw(batch);
+                if (GameConfig.DEBUG_MODE) {
+                    DEBUG_TEXT.setText(object.getId());
+                    DEBUG_TEXT.setPosition(sprite.getX() - (DEBUG_TEXT.getPrefWidth() / 2f - sprite.getWidth() / 2f), sprite.getY() - DEBUG_TEXT.getPrefHeight());
+                    DEBUG_TEXT.draw(batch, 1f);
+                }
             }
             object.setAttribute(Attribute.PREVIOUS_HEALTH, health);
         }
@@ -172,7 +182,6 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private Map<String, Texture> buildDamageTextures(Collection<String> textureIds) {
         Map<String, Texture> damageTextures = new HashMap<String, Texture>();
         for (String textureId : textureIds) {
-            System.out.println(textureId);
             Texture texture = SharedAssetManager.getInstance().get(textureId, Texture.class);
             Pixmap target = new Pixmap(texture.getWidth(), texture.getHeight(), Pixmap.Format.RGBA8888);
             target.setColor(Color.WHITE);
