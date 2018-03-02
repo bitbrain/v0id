@@ -48,6 +48,9 @@ public class PlayerMovement {
             direction.x = 1f;
             pressed = true;
         }
+
+        // TODO implement Mouse movement
+
         if (pressed) {
             mover.move(player, direction.x, direction.y);
         }

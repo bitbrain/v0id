@@ -83,6 +83,7 @@ public class BulletMachine {
                 target.setDimensions(bullet.getSize(), bullet.getSize());
                 target.setPosition(x, y);
                 target.setType(bulletType);
+                target.setAttribute(Attribute.KIND, Kind.BULLET);
             }
         }, true);
         behaviorManager.apply(createBehavior(source, velocityX, velocityY, hitParticleEffectId), bulletObject);
@@ -142,7 +143,7 @@ public class BulletMachine {
     }
 
     private void pushBack(GameObject bullet, GameObject target) {
-        final float pushDistance = 4f;
+        final float pushDistance = 8f;
         if (bullet.getLastPosition().y < bullet.getTop()) {
             // Bullet is moving up
             pushInternally(target, pushDistance);

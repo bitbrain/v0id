@@ -9,4 +9,5 @@ public interface Attribute {
     String PREVIOUS_HEALTH = "PREVIOUS_HEALTH";
     String DEAD = "dead";
     String MOVEMENT_DATA = "movement_data";
+    String KIND = "kind";
 }

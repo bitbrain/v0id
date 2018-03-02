@@ -13,17 +13,18 @@ import de.bitbrain.braingdx.graphics.pipeline.AbstractRenderLayer;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.Colors;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.CameraController;
+import de.bitbrain.v0id.core.CollisionHandler;
 import de.bitbrain.v0id.core.GameObjectFactory;
 import de.bitbrain.v0id.core.KillingMachine;
 import de.bitbrain.v0id.core.Respawner;
 import de.bitbrain.v0id.core.TemplateService;
 import de.bitbrain.v0id.core.WeaponFactory;
 import de.bitbrain.v0id.core.movement.ObjectMover;
-import de.bitbrain.v0id.Colors;
 import de.bitbrain.v0id.graphics.ParallaxRenderLayer;
 import de.bitbrain.v0id.graphics.ParticleManager;
 import de.bitbrain.v0id.graphics.StarTextureFactory;
@@ -114,6 +115,7 @@ public class IngameScreen extends AbstractScreen {
 
         // Setup world generation
         worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal(), player);
+        context.getBehaviorManager().apply(new CollisionHandler(killingMachine));
 
         // Setup UI
         Tooltip.getInstance().init(context.getWorldStage());
