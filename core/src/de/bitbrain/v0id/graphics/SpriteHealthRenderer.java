@@ -69,7 +69,7 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
     private final int minHealth, maxHealth;
     private final Map<String, BooleanProvider> booleanProviders = new HashMap<String, BooleanProvider>();
 
-    private final Label DEBUG_TEXT = new Label("", Styles.DEBUG_TEXT_SMALL);
+    private final Label DEBUG_TEXT = new Label("", Styles.LABEL_DEBUG_SMALL);
 
     public SpriteHealthRenderer(int health, String ... textureIds) {
         this.textureMapping = computeHealthMap(health, textureIds);
