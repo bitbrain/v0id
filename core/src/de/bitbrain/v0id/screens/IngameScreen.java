@@ -13,7 +13,6 @@ import de.bitbrain.braingdx.graphics.pipeline.AbstractRenderLayer;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
-import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
@@ -24,16 +23,16 @@ import de.bitbrain.v0id.core.Respawner;
 import de.bitbrain.v0id.core.TemplateService;
 import de.bitbrain.v0id.core.WeaponFactory;
 import de.bitbrain.v0id.core.movement.ObjectMover;
-import de.bitbrain.v0id.graphics.Colors;
+import de.bitbrain.v0id.Colors;
 import de.bitbrain.v0id.graphics.ParallaxRenderLayer;
 import de.bitbrain.v0id.graphics.ParticleManager;
 import de.bitbrain.v0id.graphics.StarTextureFactory;
 import de.bitbrain.v0id.input.PlayerMovement;
 import de.bitbrain.v0id.levelgen.LevelBounds;
 import de.bitbrain.v0id.levelgen.WorldGenerator;
+import de.bitbrain.v0id.ui.HeightedLabel;
+import de.bitbrain.v0id.ui.Styles;
 import de.bitbrain.v0id.ui.Tooltip;
-
-import static com.badlogic.gdx.Application.LOG_DEBUG;
 
 public class IngameScreen extends AbstractScreen {
 
@@ -125,6 +124,10 @@ public class IngameScreen extends AbstractScreen {
         music.setLooping(true);
         AudioManager.getInstance().setVolume(0.3f);
         AudioManager.getInstance().fadeInMusic(music, 10f);
+
+        HeightedLabel points = new HeightedLabel("74856", Styles.LABEL_TEXT_POINTS);
+        points.setPosition(35, Gdx.graphics.getHeight() - 75);
+        context.getStage().addActor(points);
     }
 
     @Override

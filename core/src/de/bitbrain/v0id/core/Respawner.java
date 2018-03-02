@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Camera;
 
 import java.util.Random;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import de.bitbrain.braingdx.tweens.GameObjectTween;
+import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 
 public class Respawner {
@@ -21,8 +25,12 @@ public class Respawner {
         object.setAttribute(Attribute.HEALTH, object.getAttribute(Attribute.INITIAL_HEALTH));
         object.setAttribute(Attribute.DEAD, false);
         object.setActive(true);
-        object.getScale().set(1f, 1f);
+        object.getScale().set(0f, 0f);
         object.setColor(1f, 1f, 1f,1f);
         object.setPosition(camera.position.x - object.getWidth() / 2f, camera.position.y - object.getHeight() / 2f);
+        Tween.to(object, GameObjectTween.SCALE, 0.5f)
+             .target(1f)
+             .ease(TweenEquations.easeOutCubic)
+             .start(SharedTweenManager.getInstance());
     }
 }
