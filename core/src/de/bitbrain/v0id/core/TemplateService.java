@@ -48,7 +48,8 @@ public class TemplateService {
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     100f,
-                    6.3f
+                    6.3f,
+                    250
             ),
             // RAIDER
             new ShipSpawnTemplate(
@@ -60,7 +61,8 @@ public class TemplateService {
                     weaponTemplates[0], // PLASMA CANNON
                     0f,
                     500f,
-                    26.3f
+                    26.3f,
+                    500
             ),
 
             // VIPER
@@ -73,7 +75,8 @@ public class TemplateService {
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     300f,
-                    26.3f
+                    26.3f,
+                    700
             ),
             // BOMBER
             new ShipSpawnTemplate(
@@ -85,7 +88,8 @@ public class TemplateService {
                     null, // no weapon
                     0f,
                     50f,
-                    6.3f
+                    6.3f,
+                    300
             )
     };
 

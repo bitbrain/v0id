@@ -21,6 +21,7 @@ import de.bitbrain.v0id.core.CameraController;
 import de.bitbrain.v0id.core.CollisionHandler;
 import de.bitbrain.v0id.core.GameObjectFactory;
 import de.bitbrain.v0id.core.KillingMachine;
+import de.bitbrain.v0id.core.PlayerStats;
 import de.bitbrain.v0id.core.Respawner;
 import de.bitbrain.v0id.core.TemplateService;
 import de.bitbrain.v0id.core.WeaponFactory;
@@ -31,8 +32,7 @@ import de.bitbrain.v0id.graphics.StarTextureFactory;
 import de.bitbrain.v0id.input.PlayerMovement;
 import de.bitbrain.v0id.levelgen.LevelBounds;
 import de.bitbrain.v0id.levelgen.WorldGenerator;
-import de.bitbrain.v0id.ui.HeightedLabel;
-import de.bitbrain.v0id.ui.Styles;
+import de.bitbrain.v0id.ui.PlayerScoreLabel;
 import de.bitbrain.v0id.ui.Tooltip;
 
 public class IngameScreen extends AbstractScreen {
@@ -113,6 +113,9 @@ public class IngameScreen extends AbstractScreen {
         movement = new PlayerMovement(player, mover, killingMachine, context.getGameCamera().getInternal());
         respawner.respawn(player);
 
+        PlayerStats stats = new PlayerStats(player);
+        killingMachine.addListener(stats);
+
         // Setup world generation
         worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal(), player);
         context.getBehaviorManager().apply(new CollisionHandler(killingMachine));
@@ -127,8 +130,8 @@ public class IngameScreen extends AbstractScreen {
         AudioManager.getInstance().setVolume(0.3f);
         AudioManager.getInstance().fadeInMusic(music, 10f);
 
-        HeightedLabel points = new HeightedLabel("74856", Styles.LABEL_TEXT_POINTS);
-        points.setPosition(35, Gdx.graphics.getHeight() - 75);
+        PlayerScoreLabel points = new PlayerScoreLabel(stats);
+        points.setPosition(35, Gdx.graphics.getHeight() - 50);
         context.getStage().addActor(points);
     }
 

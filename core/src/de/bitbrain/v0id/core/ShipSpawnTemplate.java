@@ -11,6 +11,7 @@ public class ShipSpawnTemplate {
     public final float minVelocity;
     public final float maxVelocity;
     public final float accellerationFactor;
+    public final int points;
 
     public ShipSpawnTemplate(
             String[] assetIds,//
@@ -21,7 +22,8 @@ public class ShipSpawnTemplate {
             WeaponTemplate weapon,
             float minVelocity,
             float maxVelocity,
-            float accellerationFactor) {
+            float accellerationFactor,
+            int points) {
         this.assetIds = assetIds;
         this.type = type;
         this.likelihood = likelihood;
@@ -31,5 +33,6 @@ public class ShipSpawnTemplate {
         this.minVelocity = minVelocity;
         this.maxVelocity = maxVelocity;
         this.accellerationFactor = accellerationFactor;
+        this.points = points;
     }
 }

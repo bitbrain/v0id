@@ -22,6 +22,7 @@ public class GameObjectFactory {
         object.setAttribute(Attribute.HEALTH, template.life);
         object.setType(template.type);
         object.setAttribute(Attribute.KIND, Kind.SHIP);
+        object.setAttribute(Attribute.POINTS, template.points);
         object.setAttribute(Attribute.MOVEMENT_DATA, new MovementData(template.accellerationFactor, template.minVelocity, template.maxVelocity));
         if (template.weapon != null) {
             weaponFactory.attachWeapon(template.weapon, object);

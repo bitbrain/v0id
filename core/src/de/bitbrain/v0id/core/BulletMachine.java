@@ -6,8 +6,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.behavior.Behavior;
@@ -35,6 +37,11 @@ public class BulletMachine {
         }
     }
 
+    public static interface BulletListener {
+        void onShoot(GameObject owner, GameObject bullet, GameObject target);
+        void onKill(GameObject owner, GameObject bullet, GameObject target);
+    }
+
     private final GameWorld gameWorld;
 
     private final Random random = new Random();
@@ -46,6 +53,8 @@ public class BulletMachine {
 
     private final ParticleManager particleManager;
 
+    private final Set<BulletListener> listeners = new HashSet<BulletListener>();
+
     public BulletMachine(GameWorld gameWorld, BehaviorManager behaviorManager, KillingMachine killingMachine, ParticleManager particleManager) {
         this.gameWorld = gameWorld;
         this.behaviorManager = behaviorManager;
@@ -54,6 +63,10 @@ public class BulletMachine {
     }
 
     private final Map<BulletType, Bullet> bullets = new HashMap<BulletType, Bullet>();
+
+    public void addListener(BulletListener listener) {
+        this.listeners.add(listener);
+    }
 
     public void register(BulletType type, float size) {
         bullets.put(type, new Bullet(size));
@@ -126,9 +139,16 @@ public class BulletMachine {
                     if (target.hasAttribute(Attribute.HEALTH)) {
                         Integer health = (Integer)target.getAttribute(Attribute.HEALTH);
                         if (health > 1) {
+                            for (BulletListener listener : listeners) {
+                                listener.onShoot(sender, source, target);
+                            }
                             target.setAttribute(Attribute.HEALTH, health - 1);
                             pushBack(source, target);
                         } else {
+                            for (BulletListener listener : listeners) {
+                                listener.onShoot(sender, source, target);
+                                listener.onKill(sender, source, target);
+                            }
                             killingMachine.kill(target);
                         }
                         particleManager.attachEffect(hitParticleEffectId, target,

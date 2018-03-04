@@ -10,4 +10,5 @@ public interface Attribute {
     String DEAD = "dead";
     String MOVEMENT_DATA = "movement_data";
     String KIND = "kind";
+    String POINTS = "points";
 }

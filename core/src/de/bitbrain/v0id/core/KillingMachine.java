@@ -2,7 +2,9 @@ package de.bitbrain.v0id.core;
 
 import com.badlogic.gdx.audio.Sound;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -16,10 +18,12 @@ import de.bitbrain.braingdx.world.GameWorld;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.graphics.ParticleManager;
 import de.bitbrain.v0id.graphics.ScreenShake;
-import de.bitbrain.v0id.ui.Styles;
-import de.bitbrain.v0id.ui.Tooltip;
 
 public class KillingMachine {
+
+    public static interface KillingListener {
+        void onKill(GameObject object);
+    }
 
     private static final float DEATH_DURATION = 1.5f;
 
@@ -31,25 +35,28 @@ public class KillingMachine {
 
     private final Random random = new Random();
 
+    private final Set<KillingListener> listeners = new HashSet<KillingListener>();
+
     public KillingMachine(GameWorld world, Respawner respawner, ParticleManager particleManager) {
         this.world = world;
         this.respawner = respawner;
         this.particleManager = particleManager;
     }
 
+    public void addListener(KillingListener listener) {
+        this.listeners.add(listener);
+    }
+
     public void kill(final GameObject object) {
         if (!object.hasAttribute(Attribute.DEAD) || object.getAttribute(Attribute.DEAD).equals(false)) {
-            Tooltip.getInstance().create(object, Styles.LABEL_TEXT_TOOLTIP, "KILLED!");
             object.setAttribute(Attribute.HEALTH, 0);
             object.setAttribute(Attribute.DEAD, true);
             object.setActive(false);
 
-            /*particleManager.attachEffect(
-                    Assets.Particles.EXPLOSION,
-                    object,
-                    object.getWidth() / 2f,
-                    object.getHeight() / 2f
-            );*/
+            for (KillingListener listener : listeners) {
+                listener.onKill(object);
+            }
+
             ScreenShake.shake(4.5f, 1.5f);
             if (object.hasAttribute(Attribute.PLAYER)) {
                 SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
