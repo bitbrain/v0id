@@ -16,8 +16,8 @@ public interface Assets {
         String OBJECT_BLOCK_LAVA = "textures/block-lava.png";
 
         // UI
-        String UI_BACKGROUND_BAR = "textures/ui-bar-background.9.png";
-        String UI_FOREGROUND_HEALTH = "textures/ui-bar-foreground-health.9.png";
+        String UI_HEALTH = "textures/ui-health.png";
+        String UI_HEALTH_BACKGROUND = "textures/ui-health-background.png";
     }
 
     interface Particles {

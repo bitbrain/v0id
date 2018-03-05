@@ -1,5 +1,6 @@
 package de.bitbrain.v0id.core;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 
 import java.util.Random;
@@ -21,12 +22,14 @@ public class Respawner {
     }
 
     public void respawn(GameObject object) {
+        if (object.hasAttribute(Attribute.PLAYER) && object.hasAttribute(Attribute.GAME_OVER)) {
+            Gdx.app.log("INFO", "Do not respawn player -> Game Over!");
+            return;
+        }
         //SharedAssetManager.getInstance().get(Assets.Sounds.RESPAWN, Sound.class).play(0.2f + random.nextFloat() * 0.2f, 0.9f + random.nextFloat() * 0.2f, 0f);
         object.setAttribute(Attribute.HEALTH, object.getAttribute(Attribute.INITIAL_HEALTH));
         object.setAttribute(Attribute.DEAD, false);
-        object.setActive(true);
         object.getScale().set(0f, 0f);
-        object.setColor(1f, 1f, 1f,1f);
         object.setPosition(camera.position.x - object.getWidth() / 2f, camera.position.y - object.getHeight() / 2f);
         Tween.to(object, GameObjectTween.SCALE, 0.5f)
              .target(1f)

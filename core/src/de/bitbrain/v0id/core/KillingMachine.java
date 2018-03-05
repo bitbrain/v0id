@@ -15,6 +15,7 @@ import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.braingdx.world.GameWorld;
+import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.graphics.ParticleManager;
 import de.bitbrain.v0id.graphics.ScreenShake;
@@ -24,8 +25,6 @@ public class KillingMachine {
     public static interface KillingListener {
         void onKill(GameObject object);
     }
-
-    private static final float DEATH_DURATION = 1.5f;
 
     private final GameWorld world;
 
@@ -63,11 +62,11 @@ public class KillingMachine {
             } else {
                 SharedAssetManager.getInstance().get(Assets.Sounds.EXPLODE_01, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
             }
-            Tween.to(object, GameObjectTween.ALPHA, DEATH_DURATION)
+            Tween.to(object, GameObjectTween.ALPHA, GameConfig.DEATH_DURATION)
                     .target(0f)
                     .ease(TweenEquations.easeOutCubic)
                     .start(SharedTweenManager.getInstance());
-            Tween.to(object, GameObjectTween.SCALE, DEATH_DURATION)
+            Tween.to(object, GameObjectTween.SCALE, GameConfig.DEATH_DURATION)
                     .target(4f)
                     .ease(TweenEquations.easeOutCubic)
                     .setCallbackTriggers(TweenCallback.COMPLETE)

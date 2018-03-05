@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.KillingMachine;
 import de.bitbrain.v0id.core.movement.ObjectMover;
 
@@ -47,6 +48,9 @@ public class PlayerMovement {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             direction.x = 1f;
             pressed = true;
+        }
+        if (player.hasAttribute(Attribute.DEAD) && (Boolean)player.getAttribute(Attribute.DEAD)) {
+            pressed = false;
         }
 
         // TODO implement Mouse movement

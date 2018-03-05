@@ -114,6 +114,9 @@ public class SpriteHealthRenderer implements GameObjectRenderManager.GameObjectR
                 sprite.setOrigin(object.getWidth() / 2f, object.getHeight() / 2f);
                 sprite.setBounds(object.getLeft(), object.getTop(), object.getWidth(), object.getHeight());
                 sprite.setScale(object.getScale().x);
+                if (object.hasAttribute(Attribute.IMMUNE) && (Boolean)object.getAttribute(Attribute.IMMUNE)) {
+                    sprite.setAlpha(0.7f);
+                }
                 sprite.draw(batch);
                 if (GameConfig.DEBUG_MODE) {
                     DEBUG_TEXT.setText(object.getId());

@@ -5,6 +5,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
@@ -12,8 +15,10 @@ import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.graphics.pipeline.AbstractRenderLayer;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.screens.AbstractScreen;
+import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.Colors;
+import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
@@ -32,10 +37,12 @@ import de.bitbrain.v0id.graphics.StarTextureFactory;
 import de.bitbrain.v0id.input.PlayerMovement;
 import de.bitbrain.v0id.levelgen.LevelBounds;
 import de.bitbrain.v0id.levelgen.WorldGenerator;
+import de.bitbrain.v0id.ui.HealthBar;
 import de.bitbrain.v0id.ui.PlayerScoreLabel;
+import de.bitbrain.v0id.ui.Styles;
 import de.bitbrain.v0id.ui.Tooltip;
 
-public class IngameScreen extends AbstractScreen {
+public class IngameScreen extends AbstractScreen implements KillingMachine.KillingListener {
 
     private Camera camera;
 
@@ -43,19 +50,17 @@ public class IngameScreen extends AbstractScreen {
 
     private CameraController cameraController;
 
-    private BulletMachine bulletMachine;
-
-    private Respawner respawner;
-
     private PlayerMovement movement;
 
     private WorldGenerator worldGenerator;
 
     private ParticleManager particleManager;
 
-    private GameContext context;
+    private PlayerStats stats;
 
     private boolean resetCameraY = false;
+
+    private GameContext context;
 
     public IngameScreen(BrainGdxGame game) {
         super(game);
@@ -67,7 +72,7 @@ public class IngameScreen extends AbstractScreen {
         camera = context.getGameCamera().getInternal();
         camera.position.x = 0;
         camera.position.y = 0;
-        respawner = new Respawner(camera);
+        Respawner respawner = new Respawner(camera);
 
         particleManager = new ParticleManager(context.getBehaviorManager());
 
@@ -100,7 +105,8 @@ public class IngameScreen extends AbstractScreen {
 
         // Setup weapon systems
         KillingMachine killingMachine = new KillingMachine(context.getGameWorld(), respawner, particleManager);
-        bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), killingMachine, particleManager);
+        killingMachine.addListener(this);
+        BulletMachine bulletMachine = new BulletMachine(context.getGameWorld(), context.getBehaviorManager(), killingMachine, particleManager);
         WeaponFactory weaponFactory = new WeaponFactory(bulletMachine, context.getBehaviorManager());
 
         ObjectMover mover = new ObjectMover();
@@ -113,8 +119,7 @@ public class IngameScreen extends AbstractScreen {
         movement = new PlayerMovement(player, mover, killingMachine, context.getGameCamera().getInternal());
         respawner.respawn(player);
 
-        PlayerStats stats = new PlayerStats(player);
-        killingMachine.addListener(stats);
+        stats = new PlayerStats(player);
 
         // Setup world generation
         worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal(), player);
@@ -133,6 +138,10 @@ public class IngameScreen extends AbstractScreen {
         PlayerScoreLabel points = new PlayerScoreLabel(stats);
         points.setPosition(35, Gdx.graphics.getHeight() - 50);
         context.getStage().addActor(points);
+
+        HealthBar healthBar = new HealthBar(stats);
+        healthBar.setPosition(35f, 35f);
+        context.getStage().addActor(healthBar);
     }
 
     @Override
@@ -152,5 +161,38 @@ public class IngameScreen extends AbstractScreen {
         super.dispose();
         Tooltip.getInstance().clear();
         starTextureFactory.dispose();
+    }
+
+    @Override
+    public void onKill(final GameObject target) {
+        if (target.hasAttribute(Attribute.POINTS) && !target.hasAttribute(Attribute.PLAYER)) {
+            int points = (Integer)target.getAttribute(Attribute.POINTS);
+            stats.addPoints(points);
+            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, String.valueOf(points));
+        } else if (target.hasAttribute(Attribute.PLAYER)) {
+            stats.reduceLifeCount();
+            if (!stats.isGameOver()) {
+                target.setAttribute(Attribute.HEALTH, stats.getTotalHealth());
+                target.setActive(false);
+                Tween.call(new TweenCallback() {
+                    @Override
+                    public void onEvent(int i, BaseTween<?> baseTween) {
+                        target.setAttribute(Attribute.IMMUNE, true);
+                    }
+                }).delay(GameConfig.DEATH_DURATION).start(SharedTweenManager.getInstance());
+                Tween.call(new TweenCallback() {
+                    @Override
+                    public void onEvent(int i, BaseTween<?> baseTween) {
+                        target.setAttribute(Attribute.IMMUNE, false);
+                        target.setActive(true);
+                        target.setColor(1f, 1f, 1f,1f);
+                    }
+                }).delay(GameConfig.DEATH_DURATION + GameConfig.IMMUNE_DURATION).start(SharedTweenManager.getInstance());
+            } else {
+                target.setAttribute(Attribute.GAME_OVER, true);
+                context.getScreenTransitions().out(new GameOverScreen(getGame(), stats), 1.5f);
+            }
+            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, "BOOM!");
+        }
     }
 }

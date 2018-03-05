@@ -4,6 +4,7 @@ package de.bitbrain.v0id.core;
 public interface Attribute {
 
     String PLAYER = "player";
+    String GAME_OVER = "game_over";
     Object INITIAL_HEALTH = "initial_health";
     String HEALTH = "health";
     String PREVIOUS_HEALTH = "PREVIOUS_HEALTH";
@@ -11,4 +12,5 @@ public interface Attribute {
     String MOVEMENT_DATA = "movement_data";
     String KIND = "kind";
     String POINTS = "points";
+    String IMMUNE = "immune";
 }

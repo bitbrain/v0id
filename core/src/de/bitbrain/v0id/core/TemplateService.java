@@ -3,6 +3,7 @@ package de.bitbrain.v0id.core;
 
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
+import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.graphics.SpriteHealthRenderer;
 
@@ -55,7 +56,7 @@ public class TemplateService {
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_RAIDER},
                     GameObjectType.RAIDER,
-                    5,
+                    GameConfig.PLAYER_HEALTH_COUNT,
                     1f,
                     10f,
                     weaponTemplates[0], // PLASMA CANNON

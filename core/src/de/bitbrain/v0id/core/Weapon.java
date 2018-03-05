@@ -32,7 +32,7 @@ public class Weapon {
 
     public void shoot(GameObject source, float delta) {
         timer.update(delta);
-        if (!source.isActive()) {
+        if (!source.isActive() && !(source.hasAttribute(Attribute.IMMUNE) && (Boolean)source.getAttribute(Attribute.IMMUNE))) {
             return;
         }
         if (timer.reached(frequency)) {
