@@ -14,7 +14,7 @@ import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.assets.SmartAssetLoader;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.v0id.assets.Assets;
-import de.bitbrain.v0id.screens.IngameScreen;
+import de.bitbrain.v0id.screens.IntroScreen;
 import de.bitbrain.v0id.ui.Styles;
 
 import static com.badlogic.gdx.Application.LOG_DEBUG;
@@ -42,6 +42,6 @@ public class V0idGame extends BrainGdxGame {
             Gdx.app.setLogLevel(LOG_DEBUG);
         }
         Styles.init();
-        return new IngameScreen(this);
+        return new IntroScreen(this);
     }
 }

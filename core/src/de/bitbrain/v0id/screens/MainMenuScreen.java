@@ -1,6 +1,5 @@
 package de.bitbrain.v0id.screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
@@ -8,19 +7,15 @@ import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.v0id.Colors;
-import de.bitbrain.v0id.core.PlayerStats;
 
-public class GameOverScreen extends AbstractScreen {
-
-    private final PlayerStats stats;
-
-    private boolean exiting;
+public class MainMenuScreen extends AbstractScreen {
 
     private GameContext context;
 
-    public GameOverScreen(BrainGdxGame game, PlayerStats stats) {
+    private boolean exiting;
+
+    public MainMenuScreen(BrainGdxGame game) {
         super(game);
-        this.stats = stats;
     }
 
     @Override
@@ -35,7 +30,7 @@ public class GameOverScreen extends AbstractScreen {
         super.onUpdate(delta);
         if (!exiting && (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY))) {
             exiting = true;
-            context.getScreenTransitions().out(new MainMenuScreen(getGame()), 1f);
+            context.getScreenTransitions().out(new IngameScreen(getGame()), 1f);
         }
     }
 }
