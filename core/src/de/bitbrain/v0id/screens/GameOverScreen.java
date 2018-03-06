@@ -6,8 +6,10 @@ import com.badlogic.gdx.Input;
 
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
+import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.v0id.Colors;
+import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.PlayerStats;
 
 public class GameOverScreen extends AbstractScreen {

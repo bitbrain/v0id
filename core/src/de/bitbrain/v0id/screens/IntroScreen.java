@@ -10,6 +10,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
+import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.GameObjectTween;
@@ -54,6 +55,7 @@ public class IntroScreen extends AbstractScreen {
                     }
                 })
                 .start(SharedTweenManager.getInstance());
+        AudioManager.getInstance().fadeInMusic(Assets.Musics.INTRO, 3f);
     }
 
     @Override

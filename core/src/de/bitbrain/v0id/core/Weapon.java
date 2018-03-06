@@ -37,7 +37,7 @@ public class Weapon {
         }
         if (timer.reached(frequency)) {
             timer.reset();
-            SharedAssetManager.getInstance().get(soundId, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
+            SharedAssetManager.getInstance().get(soundId, Sound.class).play(0.2f + random.nextFloat() * 0.4f, 0.7f + random.nextFloat() * 0.5f, 0f);
             machine.spawn(source, type, velocity.x, velocity.y, hitParticleEffectId);
         }
     }

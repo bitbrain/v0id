@@ -2,11 +2,14 @@ package de.bitbrain.v0id.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
+import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.GameObjectTween;
@@ -29,7 +32,7 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     protected void onCreate(GameContext context) {
         this.context = context;
-        context.getScreenTransitions().in(0.5f);
+        context.getScreenTransitions().in(3.5f);
         setBackgroundColor(Colors.DARK_SORROW);
         context.getRenderManager().register("logo", new SpriteRenderer(Assets.Textures.LOGO_VOID));
         logo = context.getGameWorld().addObject();
@@ -38,12 +41,12 @@ public class MainMenuScreen extends AbstractScreen {
         logo.getScale().set(0.7f, 0.7f);
         logo.getColor().a = 0.8f;
         context.getGameCamera().setTarget(logo);
-        Tween.to(logo, GameObjectTween.ALPHA, 1.0f)
+        Tween.to(logo, GameObjectTween.ALPHA, 3.0f)
                 .target(1f)
                 .ease(TweenEquations.easeInOutCubic)
                 .repeatYoyo(Tween.INFINITY, 0)
                 .start(SharedTweenManager.getInstance());
-        Tween.to(logo, GameObjectTween.SCALE, 1.0f)
+        Tween.to(logo, GameObjectTween.SCALE, 3.0f)
                 .target(0.8f)
                 .ease(TweenEquations.easeInOutCubic)
                 .repeatYoyo(Tween.INFINITY, 0)
@@ -65,6 +68,8 @@ public class MainMenuScreen extends AbstractScreen {
                     .target(0f)
                     .ease(TweenEquations.easeOutCubic)
                     .start(SharedTweenManager.getInstance());
+            SharedAssetManager.getInstance().get(Assets.Sounds.ZOOM, Sound.class).play();
+            AudioManager.getInstance().fadeOutMusic(Assets.Musics.INTRO, 1f);
         }
     }
 }

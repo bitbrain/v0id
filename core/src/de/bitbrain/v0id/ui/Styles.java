@@ -22,8 +22,8 @@ public class Styles {
         LABEL_TEXT_POINTS.fontColorHeighted = Colors.LIGHT_SORROW;
         LABEL_TEXT_POINTS.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 46);
 
-        LABEL_TEXT_TOOLTIP.fontColor = Colors.NEON_CHRIMSON;
-        LABEL_TEXT_TOOLTIP.fontColorHeighted = Colors.NEON_CHRIMSON;
+        LABEL_TEXT_TOOLTIP.fontColor = Colors.NEON_LIME;
+        LABEL_TEXT_TOOLTIP.fontColorHeighted = Colors.LIGHT_SORROW;
         LABEL_TEXT_TOOLTIP.font = BitmapFontBaker.bake(Assets.Fonts.BUNGEE, 46);
 
         LABEL_DEBUG_SMALL.fontColor = Color.WHITE;

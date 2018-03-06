@@ -168,7 +168,7 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         if (target.hasAttribute(Attribute.POINTS) && !target.hasAttribute(Attribute.PLAYER)) {
             int points = (Integer)target.getAttribute(Attribute.POINTS);
             stats.addPoints(points);
-            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, String.valueOf(points));
+            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, "+" + String.valueOf(points));
         } else if (target.hasAttribute(Attribute.PLAYER)) {
             stats.reduceLifeCount();
             if (!stats.isGameOver()) {
@@ -191,6 +191,8 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
             } else {
                 target.setAttribute(Attribute.GAME_OVER, true);
                 context.getScreenTransitions().out(new GameOverScreen(getGame(), stats), 1.5f);
+                AudioManager.getInstance().stopMusic(Assets.Musics.DIVE_INTO_THE_VOID);
+                AudioManager.getInstance().playMusic(Assets.Musics.INTRO);
             }
             Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, "BOOM!");
         }

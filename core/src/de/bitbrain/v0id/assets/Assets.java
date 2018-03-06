@@ -30,6 +30,7 @@ public interface Assets {
 
     interface Musics {
         String DIVE_INTO_THE_VOID = "musics/dive_into_the_void.ogg";
+        String INTRO = "musics/intro.ogg";
     }
 
     interface Sounds {
@@ -38,6 +39,7 @@ public interface Assets {
         String EXPLODE_01 = "sounds/explode01.ogg";
         String HIT = "sounds/hit.ogg";
         String RESPAWN = "sounds/respawn.ogg";
+        String ZOOM = "sounds/zoom.ogg";
     }
 
     interface Fonts {
