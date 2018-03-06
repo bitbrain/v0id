@@ -35,7 +35,7 @@ public class IntroScreen extends AbstractScreen {
         this.context = context;
         context.getScreenTransitions().in(0.5f);
         setBackgroundColor(Colors.DARK_SORROW);
-        context.getRenderManager().register("logo", new SpriteRenderer(Assets.Textures.LOGO));
+        context.getRenderManager().register("logo", new SpriteRenderer(Assets.Textures.LOGO_BITBRAIN));
         GameObject logo = context.getGameWorld().addObject();
         logo.setType("logo");
         logo.setDimensions(64f, 64f);

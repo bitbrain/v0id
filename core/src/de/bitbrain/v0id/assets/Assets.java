@@ -18,7 +18,8 @@ public interface Assets {
         // UI
         String UI_HEALTH = "textures/ui-health.png";
         String UI_HEALTH_BACKGROUND = "textures/ui-health-background.png";
-        String LOGO = "textures/bitbrain.png";
+        String LOGO_BITBRAIN = "textures/bitbrain.png";
+        String LOGO_VOID = "textures/void-logo.png";
     }
 
     interface Particles {
