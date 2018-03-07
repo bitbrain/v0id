@@ -63,14 +63,17 @@ public class HealthBar extends Actor {
         SharedTweenManager.getInstance().killTarget(lastColor);
         lastColor = new Color(Colors.NEON_CHRIMSON);
         Tween.to(lastColor, ColorTween.R, duration)
+                .delay(1f)
                 .target(Colors.DARK_CHRIMSON.r)
                 .ease(TweenEquations.easeOutCubic)
                 .start(SharedTweenManager.getInstance());
         Tween.to(lastColor, ColorTween.G, duration)
+                .delay(1f)
                 .target(Colors.DARK_CHRIMSON.g)
                 .ease(TweenEquations.easeOutCubic)
                 .start(SharedTweenManager.getInstance());
         Tween.to(lastColor, ColorTween.B, duration)
+                .delay(1f)
                 .target(Colors.DARK_CHRIMSON.b)
                 .ease(TweenEquations.easeOutCubic)
                 .start(SharedTweenManager.getInstance());

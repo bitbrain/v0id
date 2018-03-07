@@ -12,6 +12,8 @@ public class Styles {
     public static final HeightedLabelStyle LABEL_TEXT_MEDIUM = new HeightedLabelStyle();
     public static final HeightedLabelStyle LABEL_TEXT_POINTS = new HeightedLabelStyle();
     public static final HeightedLabelStyle LABEL_TEXT_TOOLTIP = new HeightedLabelStyle();
+    public static final HeightedLabelStyle LABEL_TEXT_TOOLTIP_OVERLAY = new HeightedLabelStyle();
+    public static final HeightedLabelStyle LABEL_TEXT_TOOLTIP_DEATH = new HeightedLabelStyle();
     public static final HeightedLabelStyle LABEL_CAPTION = new HeightedLabelStyle();
 
     public static void init() {
@@ -30,6 +32,14 @@ public class Styles {
         LABEL_TEXT_TOOLTIP.fontColor = Colors.NEON_LIME;
         LABEL_TEXT_TOOLTIP.fontColorHeighted = Colors.LIGHT_SORROW;
         LABEL_TEXT_TOOLTIP.font = BitmapFontBaker.bake(Assets.Fonts.MAIN, 46);
+
+        LABEL_TEXT_TOOLTIP_OVERLAY.fontColor = Colors.LIGHT_SORROW;
+        LABEL_TEXT_TOOLTIP_OVERLAY.fontColorHeighted = Colors.LIGHT_SORROW;
+        LABEL_TEXT_TOOLTIP_OVERLAY.font = BitmapFontBaker.bake(Assets.Fonts.MAIN, 72);
+
+        LABEL_TEXT_TOOLTIP_DEATH.fontColor = Colors.NEON_CHRIMSON;
+        LABEL_TEXT_TOOLTIP_DEATH.fontColorHeighted = Colors.DARK_CHRIMSON;
+        LABEL_TEXT_TOOLTIP_DEATH.font = BitmapFontBaker.bake(Assets.Fonts.MAIN, 46);
 
         LABEL_DEBUG_SMALL.fontColor = Color.WHITE;
         LABEL_DEBUG_SMALL.fontColorHeighted = Color.WHITE;

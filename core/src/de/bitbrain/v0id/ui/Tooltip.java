@@ -1,5 +1,6 @@
 package de.bitbrain.v0id.ui;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -47,16 +48,28 @@ public class Tooltip {
         return instance;
     }
 
+    public void create(GameObject object, Label.LabelStyle style, String text, float duration) {
+        create(object.getLeft() + object.getWidth() / 2f, object.getTop() + object.getHeight() / 2f, style, text, duration);
+    }
+
     public void create(GameObject object, Label.LabelStyle style, String text) {
         create(object.getLeft() + object.getWidth() / 2f, object.getTop() + object.getHeight() / 2f, style, text);
     }
 
-    public void create(float x, float y, Label.LabelStyle style, String text) {
-        create(x, y, style, text, Color.WHITE, null);
+    public void create(Camera camera, Label.LabelStyle style, String text) {
+        create(camera.position.x + camera.viewportWidth / 2f, camera.position.y + camera.viewportHeight / 2f, style, text);
     }
 
-    public void create(final float x, final float y, final Label.LabelStyle style, final String text, final Color color, final TweenCallback callback) {
-        create(callback, 0.9f, new TooltipFactory() {
+    public void create(float x, float y, Label.LabelStyle style, String text) {
+        create(x, y, style, text, Color.WHITE, 0.9f, null);
+    }
+
+    public void create(float x, float y, Label.LabelStyle style, String text, float duration) {
+        create(x, y, style, text, Color.WHITE, duration, null);
+    }
+
+    public void create(final float x, final float y, final Label.LabelStyle style, final String text, final Color color, float duration, final TweenCallback callback) {
+        create(callback, duration, new TooltipFactory() {
             @Override
             public Actor create() {
                 final Label tooltip = new Label(text, style) {
@@ -92,7 +105,7 @@ public class Tooltip {
         if (lastTooltip != null && removable) {
             final Actor tooltip = lastTooltip;
             tweenManager.killTarget(lastTooltip);
-            Tween.to(tooltip, ActorTween.ALPHA, 0.9f).target(0f).setCallbackTriggers(TweenCallback.COMPLETE)
+            Tween.to(tooltip, ActorTween.ALPHA, duration).target(0f).setCallbackTriggers(TweenCallback.COMPLETE)
                     .setCallback(new TweenCallback() {
                         @Override
                         public void onEvent(int type, BaseTween<?> source) {

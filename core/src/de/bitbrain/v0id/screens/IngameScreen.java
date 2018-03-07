@@ -117,7 +117,6 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         GameObject player = factory.spawnShip(TemplateService.shipTemplates[1], 0f, 0f, false);
         player.setAttribute(Attribute.PLAYER, true);
         movement = new PlayerMovement(player, mover, killingMachine, context.getGameCamera().getInternal());
-        respawner.respawn(player);
 
         stats = new PlayerStats(player);
 
@@ -142,6 +141,8 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         HealthBar healthBar = new HealthBar(stats);
         healthBar.setPosition(45f, 45f);
         context.getStage().addActor(healthBar);
+
+        respawner.respawn(player);
     }
 
     @Override
@@ -149,6 +150,7 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         if (!resetCameraY) {
             resetCameraY = true;
             camera.position.y = 0;
+            camera.update();
         }
         movement.update(delta);
         worldGenerator.update(delta);
@@ -194,7 +196,7 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
                 AudioManager.getInstance().stopMusic(Assets.Musics.DIVE_INTO_THE_VOID);
                 AudioManager.getInstance().playMusic(Assets.Musics.INTRO);
             }
-            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, "BOOM!");
+            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_DEATH, "YOU DIED");
         }
     }
 }
