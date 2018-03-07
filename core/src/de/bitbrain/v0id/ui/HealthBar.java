@@ -5,7 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
+import de.bitbrain.braingdx.tweens.ColorTween;
+import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.v0id.Colors;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.PlayerStats;
@@ -16,8 +20,13 @@ public class HealthBar extends Actor {
 
     private final Color currentCellColor = new Color();
 
+    private Color lastColor = new Color();
+
+    private int lastLife;
+
     public HealthBar(PlayerStats stats) {
         this.stats = stats;
+        lastLife = stats.getLifeCount();
     }
 
     @Override
@@ -35,12 +44,36 @@ public class HealthBar extends Actor {
                 batch.setColor(recalculate());
             } else if (i < stats.getLifeCount()){
                 batch.setColor(Colors.NEON_LIME);
+            } else if (i < stats.getLifeCount() + 1) {
+                if (lastLife != stats.getLifeCount()) {
+                    lastLife = stats.getLifeCount();
+                    animateLifeLossColor();
+                }
+                batch.setColor(lastColor);
             } else {
                 batch.setColor(Colors.DARK_CHRIMSON);
             }
             batch.draw(fg, getX(), getY() + i * offset);
         }
         batch.setColor(Color.WHITE);
+    }
+
+    private void animateLifeLossColor() {
+        final float duration = 3f;
+        SharedTweenManager.getInstance().killTarget(lastColor);
+        lastColor = new Color(Colors.NEON_CHRIMSON);
+        Tween.to(lastColor, ColorTween.R, duration)
+                .target(Colors.DARK_CHRIMSON.r)
+                .ease(TweenEquations.easeOutCubic)
+                .start(SharedTweenManager.getInstance());
+        Tween.to(lastColor, ColorTween.G, duration)
+                .target(Colors.DARK_CHRIMSON.g)
+                .ease(TweenEquations.easeOutCubic)
+                .start(SharedTweenManager.getInstance());
+        Tween.to(lastColor, ColorTween.B, duration)
+                .target(Colors.DARK_CHRIMSON.b)
+                .ease(TweenEquations.easeOutCubic)
+                .start(SharedTweenManager.getInstance());
     }
 
     private Color recalculate() {

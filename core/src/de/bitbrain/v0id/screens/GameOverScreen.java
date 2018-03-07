@@ -41,7 +41,7 @@ public class GameOverScreen extends AbstractScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        PlayerScoreLabel score = new PlayerScoreLabel(stats, Styles.LABEL_CAPTION, 4f);
+        PlayerScoreLabel score = new PlayerScoreLabel(stats, Styles.LABEL_CAPTION, 2f);
         table.center().add(score).padBottom(150f).row();
         Label lblContinue = new Label("Press any key", Styles.LABEL_TEXT_MEDIUM);
         table.center().add(lblContinue);
