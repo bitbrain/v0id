@@ -136,11 +136,11 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         AudioManager.getInstance().fadeInMusic(music, 10f);
 
         PlayerScoreLabel points = new PlayerScoreLabel(stats);
-        points.setPosition(35, Gdx.graphics.getHeight() - 50);
+        points.setPosition(45, Gdx.graphics.getHeight() - 70);
         context.getStage().addActor(points);
 
         HealthBar healthBar = new HealthBar(stats);
-        healthBar.setPosition(35f, 35f);
+        healthBar.setPosition(45f, 45f);
         context.getStage().addActor(healthBar);
     }
 
@@ -168,7 +168,7 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         if (target.hasAttribute(Attribute.POINTS) && !target.hasAttribute(Attribute.PLAYER)) {
             int points = (Integer)target.getAttribute(Attribute.POINTS);
             stats.addPoints(points);
-            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, "+" + String.valueOf(points));
+            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, String.valueOf(points));
         } else if (target.hasAttribute(Attribute.PLAYER)) {
             stats.reduceLifeCount();
             if (!stats.isGameOver()) {

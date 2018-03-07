@@ -12,7 +12,7 @@ public class BitmapFontBaker {
         FreeTypeFontGenerator generator = SharedAssetManager.getInstance().get(fontPath, FreeTypeFontGenerator.class);
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.color = Color.WHITE;
-        param.mono = false;
+        param.mono = true;
         param.size = size;
         return generator.generateFont(param);
     }

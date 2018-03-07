@@ -40,9 +40,11 @@ public interface Assets {
         String HIT = "sounds/hit.ogg";
         String RESPAWN = "sounds/respawn.ogg";
         String ZOOM = "sounds/zoom.ogg";
+        String EXIT = "sounds/exit.ogg";
+        String POINT = "sounds/point.ogg";
     }
 
     interface Fonts {
-        String BUNGEE = "fonts/bungee.ttf";
+        String MAIN = "fonts/hydrant.ttf";
     }
 }

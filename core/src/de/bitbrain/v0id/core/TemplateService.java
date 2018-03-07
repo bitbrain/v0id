@@ -20,7 +20,7 @@ public class TemplateService {
                     0.15f,
                     0.0f,
                     650f,
-                    35f
+                    38f
             ),
             new WeaponTemplate(
                     BulletType.LASER,

@@ -17,8 +17,8 @@ public class DesktopLauncher {
         config.vSyncEnabled = true;
         config.forceExit = false;
         config.title = "v0id";
-        config.width = 600;
-        config.height = 900;
+        config.width = 700;
+        config.height = 1000;
         setApplicationIcon(config);
 		new LwjglApplication(new V0idGame(), config);
 	}
