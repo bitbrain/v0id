@@ -27,10 +27,20 @@ public class TemplateService {
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    1.5f,
+                    1f,
                     0.0f,
                     450f,
                     35f
+            ),
+            new WeaponTemplate(
+                    BulletType.HEAVY_LASER,
+                    Assets.Textures.BULLET_LASER,
+                    Assets.Sounds.SOUND_SHOT_01,
+                    Assets.Particles.SLIME_RED,
+                    0.4f,
+                    0.0f,
+                    350f,
+                    45f
             )
     };
 
@@ -43,14 +53,14 @@ public class TemplateService {
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_DESTROYER},
                     GameObjectType.DESTROYER,
-                    6,
+                    12,
                     1f,
                     12.3f,
-                    weaponTemplates[1], // LASER CANNON
+                    weaponTemplates[2], // HEAVY LASER CANNON
                     0f,
-                    100f,
-                    6.3f,
-                    250
+                    90f,
+                    4.3f,
+                    1000
             ),
             // RAIDER
             new ShipSpawnTemplate(
@@ -58,12 +68,12 @@ public class TemplateService {
                     GameObjectType.RAIDER,
                     GameConfig.PLAYER_HEALTH_COUNT,
                     1f,
-                    10f,
+                    5f,
                     weaponTemplates[0], // PLASMA CANNON
                     0f,
                     500f,
                     26.3f,
-                    500
+                    250
             ),
 
             // VIPER
@@ -72,12 +82,12 @@ public class TemplateService {
                     GameObjectType.VIPER,
                     3,
                     1f,
-                    4.3f,
+                    8.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     300f,
                     26.3f,
-                    700
+                    250
             ),
             // BOMBER
             new ShipSpawnTemplate(
@@ -88,9 +98,9 @@ public class TemplateService {
                     7f,
                     null, // no weapon
                     0f,
-                    50f,
-                    6.3f,
-                    300
+                    40f,
+                    25.3f,
+                    400
             )
     };
 
