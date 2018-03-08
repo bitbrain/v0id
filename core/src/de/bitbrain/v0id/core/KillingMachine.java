@@ -56,7 +56,7 @@ public class KillingMachine {
                 listener.onKill(object);
             }
 
-            ScreenShake.shake(4.5f, 1.5f);
+            ScreenShake.shake(6f, 1.5f);
             if (object.hasAttribute(Attribute.PLAYER)) {
                 SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
             } else {

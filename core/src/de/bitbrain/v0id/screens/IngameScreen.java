@@ -96,9 +96,10 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
             }
         });
 
-        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 3,30), 0.98f).setAlpha(0.5f);
-        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 4,17), 0.85f).setAlpha(0.55f);
-        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 5,12), 0.72f).setAlpha(0.6f);
+        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 3,30), 0.98f).setAlpha(0.3f);
+        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 4,17), 0.85f).setAlpha(0.65f);
+        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 5,12), 0.72f).setAlpha(0.8f);
+        backgroundLayer.addLayer(starTextureFactory.create(Gdx.graphics.getHeight() / 2, 2,5), 0.52f).setAlpha(0.9f);
 
         // Setup Camera
         cameraController = new CameraController(context.getGameCamera());

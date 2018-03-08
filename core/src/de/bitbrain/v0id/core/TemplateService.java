@@ -17,7 +17,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_PLASMA,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME,
-                    0.15f,
+                    0.25f,
                     0.0f,
                     650f,
                     38f
@@ -29,7 +29,7 @@ public class TemplateService {
                     Assets.Particles.SLIME_RED,
                     1f,
                     0.0f,
-                    450f,
+                    50f,
                     35f
             ),
             new WeaponTemplate(
@@ -39,7 +39,7 @@ public class TemplateService {
                     Assets.Particles.SLIME_RED,
                     0.4f,
                     0.0f,
-                    350f,
+                    30f,
                     45f
             )
     };
@@ -53,13 +53,13 @@ public class TemplateService {
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_DESTROYER},
                     GameObjectType.DESTROYER,
-                    12,
+                    8,
                     1f,
                     12.3f,
                     weaponTemplates[2], // HEAVY LASER CANNON
                     0f,
-                    90f,
-                    4.3f,
+                    20f,
+                    2.3f,
                     1000
             ),
             // RAIDER
@@ -71,8 +71,8 @@ public class TemplateService {
                     5f,
                     weaponTemplates[0], // PLASMA CANNON
                     0f,
-                    500f,
-                    26.3f,
+                    700f,
+                    46.3f,
                     250
             ),
 
@@ -93,13 +93,13 @@ public class TemplateService {
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_BOMBER},
                     GameObjectType.BOMBER,
-                    10,
+                    3,
                     1f,
                     7f,
                     null, // no weapon
                     0f,
-                    40f,
-                    25.3f,
+                    370f,
+                    35.3f,
                     400
             )
     };

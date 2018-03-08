@@ -59,11 +59,11 @@ public class PlayerMovement {
             mover.move(player, direction.x, direction.y);
         }
         // Kill off the player if he reaches the ground...
-        if (player.getTop() - player.getHeight() < camera.position.y - camera.viewportHeight / 2f) {
+        if (player.getTop() < camera.position.y - camera.viewportHeight / 2f) {
+            player.setPosition(player.getLeft(), camera.position.y - camera.viewportHeight / 2f);
             if (player.isActive()) {
                 killingMachine.kill(player);
             }
-            player.setPosition(player.getLeft(), camera.position.y - camera.viewportHeight / 2f);
         }
         if (player.getLeft() < camera.position.x - camera.viewportWidth / 2f) {
             player.setPosition(camera.position.x - camera.viewportWidth / 2f, player.getTop());

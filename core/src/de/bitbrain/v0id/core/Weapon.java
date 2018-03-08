@@ -8,6 +8,7 @@ import java.util.Random;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.util.DeltaTimer;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.GameConfig;
 
 public class Weapon {
 
@@ -19,6 +20,7 @@ public class Weapon {
     private final float frequency;
     private final DeltaTimer timer = new DeltaTimer();
     private final Random random = new Random();
+    private final Vector2 baseSpeed;
 
     public Weapon(BulletType type, String soundId,  String hitParticleEffectId, BulletMachine machine, float frequency, float velocityX, float velocityY) {
         this.type = type;
@@ -26,7 +28,10 @@ public class Weapon {
         this.hitParticleEffectId = hitParticleEffectId;
         this.machine = machine;
         this.frequency = frequency;
+        this.baseSpeed = new Vector2(GameConfig.BASE_SPEED + GameConfig.INITIAL_LEVEL_SPEED, 0f);
         this.velocity = new Vector2(velocityX, velocityY);
+        baseSpeed.setAngle(velocity.angle());
+        velocity.add(baseSpeed);
         timer.update(frequency);
     }
 
