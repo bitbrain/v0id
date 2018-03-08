@@ -22,6 +22,8 @@ public class WorldGenerator {
 
     private final GameObject player;
 
+    private float time;
+
     private final Map<Object, DeltaTimer> timers = new HashMap<Object, DeltaTimer>();
 
     public WorldGenerator(GameObjectFactory factory, Camera camera, GameObject player) {
@@ -34,6 +36,7 @@ public class WorldGenerator {
     }
 
     public void update(float delta) {
+        time += delta;
         for (ShipSpawnTemplate template : TemplateService.shipTemplates) {
             if (template.type.equals(player.getType())) {
                 continue;
@@ -41,8 +44,14 @@ public class WorldGenerator {
             DeltaTimer timer = timers.get(template.type);
             timer.update(delta);
             if (timer.reached(template.interval)) {
-                // Do spawn a new enemy
-                factory.spawnShip(template, getRandomX(), getCameraTop());
+                int spawnRange = (int) Math.ceil(time / 60f);
+                int count =  template.likelihood > random.nextFloat() ? random.nextInt(spawnRange) + 1 : 1;
+                for (int i = 0; i < count; ++i) {
+                    if (template.likelihood > random.nextFloat()) {
+                        // Do spawn a new enemy
+                        factory.spawnShip(template, getRandomX(), getCameraTop());
+                    }
+                }
                 timer.reset();
             }
         }

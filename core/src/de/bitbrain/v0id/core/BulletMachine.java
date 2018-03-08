@@ -96,6 +96,7 @@ public class BulletMachine {
                 target.setDimensions(bullet.getSize(), bullet.getSize());
                 target.setPosition(x, y);
                 target.setType(bulletType);
+                target.setAttribute(Attribute.HEALTH, 2);
                 target.setAttribute(Attribute.KIND, Kind.BULLET);
             }
         }, true);
@@ -118,15 +119,7 @@ public class BulletMachine {
                 Object sourceType = source.getType();
                 Object targetType = target.getType();
                 // Do ignore source
-                if (targetType.equals(source)) {
-                    return;
-                }
-                // Do ignore bullets
-                if (sourceType instanceof BulletType && targetType instanceof BulletType) {
-                    return;
-                }
-                // Ignore target bullets
-                if (targetType instanceof BulletType) {
+                if (targetType.equals(sourceType)) {
                     return;
                 }
                 // Ignore the same kind

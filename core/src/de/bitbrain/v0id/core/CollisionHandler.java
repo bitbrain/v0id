@@ -18,6 +18,9 @@ public class CollisionHandler extends BehaviorAdapter {
 
     @Override
     public void update(GameObject source, GameObject target, float delta) {
+        if (!source.hasAttribute(Attribute.KIND) || !target.hasAttribute(Attribute.KIND)) {
+            return;
+        }
         if (source.getAttribute(Attribute.KIND).equals(Kind.BULLET) ||
             target.getAttribute(Attribute.KIND).equals(Kind.BULLET)) {
             return;

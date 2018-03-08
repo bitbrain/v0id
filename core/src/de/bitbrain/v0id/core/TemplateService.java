@@ -17,7 +17,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_PLASMA,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME,
-                    0.25f,
+                    0.1f,
                     0.0f,
                     650f,
                     38f
@@ -27,7 +27,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    1f,
+                    1.5f,
                     0.0f,
                     50f,
                     35f
@@ -37,7 +37,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    0.4f,
+                    1f,
                     0.0f,
                     30f,
                     45f
@@ -54,8 +54,8 @@ public class TemplateService {
                     new String[]{Assets.Textures.SHIP_DESTROYER},
                     GameObjectType.DESTROYER,
                     8,
-                    1f,
-                    12.3f,
+                    0.05f,
+                    .3f,
                     weaponTemplates[2], // HEAVY LASER CANNON
                     0f,
                     20f,
@@ -68,7 +68,7 @@ public class TemplateService {
                     GameObjectType.RAIDER,
                     GameConfig.PLAYER_HEALTH_COUNT,
                     1f,
-                    5f,
+                    1f,
                     weaponTemplates[0], // PLASMA CANNON
                     0f,
                     700f,
@@ -81,8 +81,8 @@ public class TemplateService {
                     new String[]{Assets.Textures.SHIP_VIPER},
                     GameObjectType.VIPER,
                     3,
-                    1f,
-                    8.3f,
+                    0.6f,
+                    1.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,
                     300f,
@@ -94,8 +94,8 @@ public class TemplateService {
                     new String[]{Assets.Textures.SHIP_BOMBER},
                     GameObjectType.BOMBER,
                     3,
-                    1f,
-                    7f,
+                    0.2f,
+                    2f,
                     null, // no weapon
                     0f,
                     370f,

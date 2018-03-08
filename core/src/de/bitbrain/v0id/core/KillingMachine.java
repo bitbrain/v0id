@@ -52,15 +52,16 @@ public class KillingMachine {
             object.setAttribute(Attribute.DEAD, true);
             object.setActive(false);
 
-            for (KillingListener listener : listeners) {
-                listener.onKill(object);
-            }
-
-            ScreenShake.shake(6f, 1.5f);
-            if (object.hasAttribute(Attribute.PLAYER)) {
-                SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
-            } else {
-                SharedAssetManager.getInstance().get(Assets.Sounds.EXPLODE_01, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
+            if (!object.getAttribute(Attribute.KIND).equals(Kind.BULLET)) {
+                for (KillingListener listener : listeners) {
+                    listener.onKill(object);
+                }
+                ScreenShake.shake(6f, 1.5f);
+                if (object.hasAttribute(Attribute.PLAYER)) {
+                    SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
+                } else {
+                    SharedAssetManager.getInstance().get(Assets.Sounds.EXPLODE_01, Sound.class).play(0.4f + random.nextFloat() * 0.5f, 0.7f + random.nextFloat() * 0.5f, 0f);
+                }
             }
             Tween.to(object, GameObjectTween.ALPHA, GameConfig.DEATH_DURATION)
                     .target(0f)
