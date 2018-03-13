@@ -44,7 +44,7 @@ public class WorldGenerator {
             DeltaTimer timer = timers.get(template.type);
             timer.update(delta);
             if (timer.reached(template.interval)) {
-                int spawnRange = (int) Math.ceil(time / 60f);
+                int spawnRange = (int) Math.ceil(time / 20f);
                 int count =  template.likelihood > random.nextFloat() ? random.nextInt(spawnRange) + 1 : 1;
                 for (int i = 0; i < count; ++i) {
                     if (template.likelihood > random.nextFloat()) {

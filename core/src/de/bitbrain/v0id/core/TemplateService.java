@@ -33,7 +33,7 @@ public class TemplateService {
                             }
                         }
                     },
-                    0.05f
+                    0.04f
             ),
             new ConsumableTemplate(
                     GameObjectType.CONSUMABLE_WEAPON_UPGRADE,
@@ -50,7 +50,7 @@ public class TemplateService {
                             }
                         }
                     },
-                    0.03f
+                    0.02f
             ),
     };
 
@@ -62,7 +62,7 @@ public class TemplateService {
                     Assets.Textures.BULLET_PLASMA,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME,
-                    0.1f,
+                    0.15f,
                     0.0f,
                     650f,
                     38f,
@@ -129,7 +129,7 @@ public class TemplateService {
                     new String[]{Assets.Textures.SHIP_VIPER},
                     GameObjectType.VIPER,
                     3,
-                    0.6f,
+                    0.5f,
                     1.3f,
                     weaponTemplates[1], // LASER CANNON
                     0f,

@@ -13,7 +13,7 @@ import de.bitbrain.v0id.GameConfig;
 public class Weapon {
 
     // The distance between bullets
-    private static final float WEAPON_SPREAD_RATIO = 40;
+    private static final float WEAPON_SPREAD_RATIO = 20f;
 
     private final BulletType type;
     private final BulletMachine machine;
@@ -47,7 +47,8 @@ public class Weapon {
         if (!source.isActive() && !(source.hasAttribute(Attribute.IMMUNE) && (Boolean)source.getAttribute(Attribute.IMMUNE))) {
             return;
         }
-        if (timer.reached(frequency)) {
+        float computedFrequency = frequency - (float)Math.min(frequency * 0.1, (frequency * 0.01f) * level);
+        if (timer.reached(computedFrequency)) {
             timer.reset();
             int numberOfShots = getNumberOfShots();
             if (numberOfShots > 0) {
