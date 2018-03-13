@@ -127,6 +127,10 @@ public class BulletMachine {
                 if (sender.getAttribute(Attribute.PLAYER) == target.getAttribute(Attribute.PLAYER)) {
                     return;
                 }
+                // Ignore consumables
+                if (Kind.BULLET.equals(source.getAttribute(Attribute.KIND)) && Kind.CONSUMABLE.equals(target.getAttribute(Attribute.KIND))) {
+                    return;
+                }
                 bulletCollision.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
                 targetCollision.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
                 if (bulletCollision.overlaps(targetCollision) || targetCollision.contains(bulletCollision)) {

@@ -10,10 +10,8 @@ public interface Assets {
         String SHIP_BOMBER = "textures/bomber.png";
         String BULLET_PLASMA = "textures/plasma.png";
         String BULLET_LASER = "textures/laser.png";
-        String OBJECT_BLOCK = "textures/block.png";
-        String OBJECT_BLOCK_CRACKED = "textures/block-cracked.png";
-        String OBJECT_BLOCK_DAMAGED = "textures/block-damaged.png";
-        String OBJECT_BLOCK_LAVA = "textures/block-lava.png";
+        String CONSUMABLE_HEALTH = "textures/consumable-health-canister.png";
+        String CONSUMABLE_WEAPON_UPGRADE = "textures/consumable-weapon-upgrade.png";
 
         // UI
         String UI_HEALTH = "textures/ui-health.png";
@@ -26,6 +24,8 @@ public interface Assets {
         String SLIME = "particles/slime.p";
         String SLIME_RED = "particles/slime-red.p";
         String EXPLOSION = "particles/explosion.p";
+        String CONSUMABLE_HEALTH = "particles/slime.p";
+        String CONSUMABLE_WEAPON_UPGRADE = "particles/slime.p";
     }
 
     interface Musics {
@@ -42,6 +42,8 @@ public interface Assets {
         String ZOOM = "sounds/zoom.ogg";
         String EXIT = "sounds/exit.ogg";
         String POINT = "sounds/point.ogg";
+        String WEAPON_UP = "sounds/weapon_up.ogg";
+        String HEALTH_UP = "sounds/life_up.ogg";
     }
 
     interface Fonts {

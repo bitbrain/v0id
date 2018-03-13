@@ -52,7 +52,7 @@ public class KillingMachine {
             object.setAttribute(Attribute.DEAD, true);
             object.setActive(false);
 
-            if (!object.getAttribute(Attribute.KIND).equals(Kind.BULLET)) {
+            if (!object.getAttribute(Attribute.KIND).equals(Kind.BULLET) && !object.getAttribute(Attribute.KIND).equals(Kind.CONSUMABLE)) {
                 for (KillingListener listener : listeners) {
                     listener.onKill(object);
                 }

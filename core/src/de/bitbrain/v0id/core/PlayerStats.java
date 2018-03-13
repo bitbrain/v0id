@@ -30,6 +30,12 @@ public class PlayerStats {
         }
     }
 
+    public void increaseLifeCount() {
+        if (lifeCount < getTotalLifeCount() && !isGameOver()) {
+            lifeCount++;
+        }
+    }
+
     public boolean isGameOver() {
         return lifeCount <= 0;
     }

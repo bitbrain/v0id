@@ -13,4 +13,7 @@ public interface Attribute {
     String KIND = "kind";
     String POINTS = "points";
     String IMMUNE = "immune";
+    String WEAPON = "weapon";
+    String PLAYER_STATS = "stats";
+    String CONSUMABLE = "consumable";
 }

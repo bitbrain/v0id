@@ -4,5 +4,7 @@ public enum GameObjectType {
     VIPER,
     RAIDER,
     DESTROYER,
-    BOMBER;
+    BOMBER,
+    CONSUMABLE_HEALTH,
+    CONSUMABLE_WEAPON_UPGRADE;
 }

@@ -24,6 +24,7 @@ import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.BulletMachine;
 import de.bitbrain.v0id.core.CameraController;
 import de.bitbrain.v0id.core.CollisionHandler;
+import de.bitbrain.v0id.core.ConsumableSpawner;
 import de.bitbrain.v0id.core.GameObjectFactory;
 import de.bitbrain.v0id.core.KillingMachine;
 import de.bitbrain.v0id.core.PlayerStats;
@@ -61,6 +62,8 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
     private boolean resetCameraY = false;
 
     private GameContext context;
+
+    private ConsumableSpawner consumableSpawner;
 
     public IngameScreen(BrainGdxGame game) {
         super(game);
@@ -120,6 +123,9 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         movement = new PlayerMovement(player, mover, killingMachine, context.getGameCamera().getInternal());
 
         stats = new PlayerStats(player);
+        player.setAttribute(Attribute.PLAYER_STATS, stats);
+
+        consumableSpawner = new ConsumableSpawner(factory);
 
         // Setup world generation
         worldGenerator = new WorldGenerator(factory, context.getGameCamera().getInternal(), player);
@@ -172,6 +178,7 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
             int points = (Integer)target.getAttribute(Attribute.POINTS);
             stats.addPoints(points);
             Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP, String.valueOf(points));
+            consumableSpawner.spawn(target);
         } else if (target.hasAttribute(Attribute.PLAYER)) {
             stats.reduceLifeCount();
             if (!stats.isGameOver()) {

@@ -28,6 +28,12 @@ public class CollisionHandler extends BehaviorAdapter {
         sourceRect.set(source.getLeft(), source.getTop(), source.getWidth(), source.getHeight());
         targetRect.set(target.getLeft(), target.getTop(), target.getWidth(), target.getHeight());
         if (sourceRect.contains(targetRect) || sourceRect.overlaps(targetRect)) {
+            if (source.hasAttribute(Attribute.PLAYER) && Kind.CONSUMABLE.equals(target.getAttribute(Attribute.KIND))) {
+                Consumable c = (Consumable)target.getAttribute(Attribute.CONSUMABLE);
+                c.consume(source);
+                killingMachine.kill(target);
+                return;
+            }
             if (source.hasAttribute(Attribute.PLAYER)) {
                 killingMachine.kill(source);
             }

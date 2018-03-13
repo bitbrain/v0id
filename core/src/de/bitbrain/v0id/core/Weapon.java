@@ -26,6 +26,7 @@ public class Weapon {
     private final Vector2 baseSpeed;
     private final int[] pattern;
     private int patternCounter = 0;
+    private int level = 0;
 
     public Weapon(BulletType type, String soundId,  String hitParticleEffectId, BulletMachine machine, float frequency, float velocityX, float velocityY, int[] pattern) {
         this.type = type;
@@ -64,15 +65,22 @@ public class Weapon {
         }
     }
 
+    public void upgrade() {
+        level++;
+    }
+
     private int getNumberOfShots() {
         if (pattern == null || pattern.length < 1) {
             // No pattern defined, shoot 1 bullet!
-            return 1;
+            return 1 + level;
         }
         int shots = pattern[patternCounter++];
         if (patternCounter >= pattern.length) {
             patternCounter = 0;
         }
-        return shots;
+        if (shots == 0) {
+            return 0;
+        }
+        return shots + level;
     }
 }
