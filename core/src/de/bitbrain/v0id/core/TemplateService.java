@@ -1,17 +1,13 @@
 package de.bitbrain.v0id.core;
 
 
-import com.badlogic.gdx.audio.Sound;
-
 import de.bitbrain.braingdx.GameContext;
-import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
-import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.assets.Assets;
+import de.bitbrain.v0id.core.consumables.HealthConsumable;
+import de.bitbrain.v0id.core.consumables.WeaponUpgradeConsumable;
 import de.bitbrain.v0id.graphics.SpriteHealthRenderer;
-import de.bitbrain.v0id.ui.Styles;
-import de.bitbrain.v0id.ui.Tooltip;
 
 public class TemplateService {
 
@@ -21,35 +17,14 @@ public class TemplateService {
                     GameObjectType.CONSUMABLE_HEALTH,
                     Assets.Textures.CONSUMABLE_HEALTH,
                     Assets.Particles.CONSUMABLE_HEALTH,
-                    new Consumable() {
-                        @Override
-                        public void consume(GameObject target) {
-                            if (target.hasAttribute(Attribute.PLAYER_STATS) && target.hasAttribute(Attribute.HEALTH)) {
-                                PlayerStats stats = (PlayerStats)target.getAttribute(Attribute.PLAYER_STATS);
-                                stats.increaseLifeCount();
-                                target.setAttribute(Attribute.HEALTH, target.getAttribute(Attribute.INITIAL_HEALTH));
-                                Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_HEALTH_UP, "HEALTH UP!");
-                                SharedAssetManager.getInstance().get(Assets.Sounds.HEALTH_UP, Sound.class).play();
-                            }
-                        }
-                    },
+                    new HealthConsumable(),
                     0.04f
             ),
             new ConsumableTemplate(
                     GameObjectType.CONSUMABLE_WEAPON_UPGRADE,
                     Assets.Textures.CONSUMABLE_WEAPON_UPGRADE,
                     Assets.Particles.CONSUMABLE_WEAPON_UPGRADE,
-                    new Consumable() {
-                        @Override
-                        public void consume(GameObject target) {
-                            if (target.hasAttribute(Attribute.WEAPON)) {
-                                Weapon weapon = (Weapon)target.getAttribute(Attribute.WEAPON);
-                                weapon.upgrade();
-                                Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_WEAPON_UP, "WEAPON UPGRADED!");
-                                SharedAssetManager.getInstance().get(Assets.Sounds.WEAPON_UP, Sound.class).play();
-                            }
-                        }
-                    },
+                    new WeaponUpgradeConsumable(),
                     0.02f
             ),
     };
