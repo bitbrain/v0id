@@ -9,6 +9,7 @@ public class WeaponTemplate {
     public final float velocityX;
     public final float velocityY;
     public final float size;
+    public final int[] pattern;
 
     public WeaponTemplate(//
             BulletType type,//
@@ -18,7 +19,8 @@ public class WeaponTemplate {
             float frequency,//
             float velocityX,//
             float velocityY,//
-            float size) {
+            float size,
+            int[] pattern) {
         this.type = type;
         this.assetId = assetId;
         this.soundId = soundId;
@@ -27,5 +29,6 @@ public class WeaponTemplate {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.size = size;
+        this.pattern = pattern;
     }
 }

@@ -72,7 +72,7 @@ public class BulletMachine {
         bullets.put(type, new Bullet(size));
     }
 
-    public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY, String hitParticleEffectId) {
+    public void spawn(GameObject source, final BulletType bulletType, float velocityX, float velocityY, String hitParticleEffectId, float offsetX, float offsetY) {
         final Bullet bullet = bullets.get(bulletType);
         if (bullet == null) {
             Gdx.app.error("bullet", "Bullet type " + bulletType + " not registered.");
@@ -81,10 +81,11 @@ public class BulletMachine {
         float top = source.getTop() + source.getHeight();
         if (!source.hasAttribute(Attribute.PLAYER)) {
             top = source.getTop() - source.getHeight();
+            offsetY = -offsetY;
             velocityY = -velocityY;
         }
-        spawn(source, source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f,
-              top,
+        spawn(source, source.getLeft() + source.getWidth() / 2f - bullet.getSize() / 2f + offsetX,
+              top + offsetY,
               bulletType, velocityX, velocityY, hitParticleEffectId);
     }
 

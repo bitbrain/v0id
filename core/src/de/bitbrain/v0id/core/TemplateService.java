@@ -20,27 +20,30 @@ public class TemplateService {
                     0.1f,
                     0.0f,
                     650f,
-                    38f
+                    38f,
+                    null // always shoot
             ),
             new WeaponTemplate(
                     BulletType.LASER,
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    1.5f,
+                    0.5f,
                     0.0f,
                     50f,
-                    35f
+                    35f,
+                    new int[]{1,1,0,0,0}
             ),
             new WeaponTemplate(
                     BulletType.HEAVY_LASER,
                     Assets.Textures.BULLET_LASER,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    1f,
+                    0.8f,
                     0.0f,
                     30f,
-                    45f
+                    45f,
+                    new int[]{2,1,0,0,0}
             )
     };
 
