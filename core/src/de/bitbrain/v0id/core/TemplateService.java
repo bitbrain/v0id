@@ -57,15 +57,15 @@ public class TemplateService {
                     new int[]{1,1,0,0,0}
             ),
             new WeaponTemplate(
-                    BulletType.HEAVY_LASER,
-                    Assets.Textures.BULLET_LASER,
+                    BulletType.PHOTON,
+                    Assets.Textures.BULLET_PHOTON,
                     Assets.Sounds.SOUND_SHOT_01,
                     Assets.Particles.SLIME_RED,
-                    0.8f,
+                    0.3f,
                     0.0f,
-                    30f,
-                    45f,
-                    new int[]{2,1,0,0,0}
+                    1f,
+                    35f,
+                    new int[]{1,1,1,0,0,0,0}
             )
     };
 
@@ -83,8 +83,8 @@ public class TemplateService {
                     .3f,
                     weaponTemplates[2], // HEAVY LASER CANNON
                     0f,
-                    150f,
-                    60.3f,
+                    50f,
+                    30.3f,
                     1000,
                     CirclingEnemyBehavior.factory()
             ),
@@ -114,7 +114,7 @@ public class TemplateService {
                     0f,
                     300f,
                     26.3f,
-                    250,
+                    100,
                     null
             ),
             // BOMBER
@@ -126,9 +126,9 @@ public class TemplateService {
                     2f,
                     null, // no weapon
                     0f,
-                    350f,
+                    450f,
                     17.3f,
-                    400,
+                    500,
                     ChasingEnemyBehavior.factory()
             )
     };

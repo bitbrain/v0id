@@ -10,6 +10,7 @@ public interface Assets {
         String SHIP_BOMBER = "textures/bomber.png";
         String BULLET_PLASMA = "textures/plasma.png";
         String BULLET_LASER = "textures/laser.png";
+        String BULLET_PHOTON = "textures/photon.png";
         String CONSUMABLE_HEALTH = "textures/consumable-health-canister.png";
         String CONSUMABLE_WEAPON_UPGRADE = "textures/consumable-weapon-upgrade.png";
 

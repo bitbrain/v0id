@@ -3,5 +3,5 @@ package de.bitbrain.v0id.core;
 public enum BulletType {
     PLASMA,
     LASER,
-    HEAVY_LASER;
+    PHOTON;
 }

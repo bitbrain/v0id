@@ -80,7 +80,7 @@ public class BulletMachine {
         }
         float top = source.getTop() + source.getHeight();
         if (!source.hasAttribute(Attribute.PLAYER)) {
-            top = source.getTop() - source.getHeight();
+            top = source.getTop() - source.getHeight() / 2f;
             offsetY = -offsetY;
             velocityY = -velocityY;
         }
