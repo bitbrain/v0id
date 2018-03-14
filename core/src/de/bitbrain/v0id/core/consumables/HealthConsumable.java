@@ -17,10 +17,24 @@ public class HealthConsumable implements Consumable {
     public void consume(GameObject target) {
         if (target.hasAttribute(Attribute.PLAYER_STATS) && target.hasAttribute(Attribute.HEALTH)) {
             PlayerStats stats = (PlayerStats)target.getAttribute(Attribute.PLAYER_STATS);
-            stats.increaseLifeCount();
-            target.setAttribute(Attribute.HEALTH, target.getAttribute(Attribute.INITIAL_HEALTH));
-            Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_HEALTH_UP, "HEALTH UP!");
+            if (hasFullHealthAndLife(stats)) {
+                Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_HEALTH_UP, "FULL LIFE!");
+            }else if (hasFullHealth(target)) {
+                Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_HEALTH_UP, "LIFE UP!");
+                stats.increaseLifeCount();
+            } else {
+                Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_HEALTH_UP, "HEALTH UP!");
+                target.setAttribute(Attribute.HEALTH, target.getAttribute(Attribute.INITIAL_HEALTH));
+            }
             SharedAssetManager.getInstance().get(Assets.Sounds.HEALTH_UP, Sound.class).play();
         }
+    }
+
+    private boolean hasFullHealthAndLife(PlayerStats stats) {
+        return stats.getLifeCount() == stats.getTotalLifeCount() && stats.getCurrentHealth() == stats.getTotalHealth();
+    }
+
+    private boolean hasFullHealth(GameObject target) {
+        return target.getAttribute(Attribute.HEALTH).equals(target.getAttribute(Attribute.INITIAL_HEALTH));
     }
 }

@@ -18,7 +18,7 @@ public class DesktopLauncher {
         config.forceExit = false;
         config.title = "v0id";
         config.width = 700;
-        config.height = 1000;
+        config.height = 900;
         setApplicationIcon(config);
 		new LwjglApplication(new V0idGame(), config);
 	}

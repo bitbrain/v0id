@@ -47,7 +47,7 @@ public class Weapon {
         if (!source.isActive() && !(source.hasAttribute(Attribute.IMMUNE) && (Boolean)source.getAttribute(Attribute.IMMUNE))) {
             return;
         }
-        float computedFrequency = frequency - (float)Math.min(frequency * 0.1, (frequency * 0.01f) * level);
+        float computedFrequency = frequency - (float)Math.min(frequency * 0.1, (frequency * 0.05f) * level);
         if (timer.reached(computedFrequency)) {
             timer.reset();
             int numberOfShots = getNumberOfShots();
@@ -73,7 +73,7 @@ public class Weapon {
     private int getNumberOfShots() {
         if (pattern == null || pattern.length < 1) {
             // No pattern defined, shoot 1 bullet!
-            return 1 + level;
+            return 1 + getNumberOfAdditionalBullets();
         }
         int shots = pattern[patternCounter++];
         if (patternCounter >= pattern.length) {
@@ -82,6 +82,10 @@ public class Weapon {
         if (shots == 0) {
             return 0;
         }
-        return shots + level;
+        return shots + getNumberOfAdditionalBullets();
+    }
+
+    private int getNumberOfAdditionalBullets() {
+        return (int)Math.floor(level / 3);
     }
 }

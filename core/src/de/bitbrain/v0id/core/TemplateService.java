@@ -25,7 +25,7 @@ public class TemplateService {
                     Assets.Textures.CONSUMABLE_WEAPON_UPGRADE,
                     Assets.Particles.CONSUMABLE_WEAPON_UPGRADE,
                     new WeaponUpgradeConsumable(),
-                    0.02f
+                    0.08f
             ),
     };
 
