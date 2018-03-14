@@ -6,15 +6,18 @@ import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.GameConfig;
 import de.bitbrain.v0id.ai.RegularEnemyBehavior;
 import de.bitbrain.v0id.core.movement.MovementData;
+import de.bitbrain.v0id.core.movement.ObjectMover;
 
 public class GameObjectFactory {
 
     private final GameContext context;
     private final WeaponFactory weaponFactory;
+    private final ObjectMover mover;
 
-    public GameObjectFactory(GameContext context, WeaponFactory weaponFactory) {
+    public GameObjectFactory(GameContext context, WeaponFactory weaponFactory, ObjectMover mover) {
         this.context = context;
         this.weaponFactory = weaponFactory;
+        this.mover = mover;
     }
 
     public GameObject spawnShip(ShipSpawnTemplate template, float x, float y, boolean npc) {
@@ -30,9 +33,14 @@ public class GameObjectFactory {
             object.setAttribute(Attribute.WEAPON, weaponFactory.attachWeapon(template.weapon, object));
         }
         if (npc) {
-            RegularEnemyBehavior behavior = new RegularEnemyBehavior(context.getGameCamera().getInternal());
-            context.getBehaviorManager().apply(behavior, object);
             object.setRotation(180f);
+            if (template.behaviorFactory != null) {
+                template.behaviorFactory.init(context, mover);
+                context.getBehaviorManager().apply(template.behaviorFactory.create(), object);
+            } else {
+                RegularEnemyBehavior behavior = new RegularEnemyBehavior(context.getGameCamera().getInternal());
+                context.getBehaviorManager().apply(behavior, object);
+            }
         }
         return object;
     }

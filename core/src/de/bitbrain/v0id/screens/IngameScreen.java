@@ -117,7 +117,7 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         context.getBehaviorManager().apply(mover);
 
         // Setup player
-        GameObjectFactory factory = new GameObjectFactory(context, weaponFactory);
+        GameObjectFactory factory = new GameObjectFactory(context, weaponFactory, mover);
         GameObject player = factory.spawnShip(TemplateService.shipTemplates[1], 0f, 0f, false);
         player.setAttribute(Attribute.PLAYER, true);
         movement = new PlayerMovement(player, mover, killingMachine, context.getGameCamera().getInternal());

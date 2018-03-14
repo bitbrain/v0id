@@ -1,5 +1,7 @@
 package de.bitbrain.v0id.core;
 
+import de.bitbrain.v0id.ai.BehaviorFactory;
+
 public class ShipSpawnTemplate {
 
     public final String[] assetIds;
@@ -12,6 +14,7 @@ public class ShipSpawnTemplate {
     public final float maxVelocity;
     public final float accellerationFactor;
     public final int points;
+    public final BehaviorFactory behaviorFactory;
 
     public ShipSpawnTemplate(
             String[] assetIds,//
@@ -23,7 +26,8 @@ public class ShipSpawnTemplate {
             float minVelocity,
             float maxVelocity,
             float accellerationFactor,
-            int points) {
+            int points,
+            BehaviorFactory behaviorFactory) {
         this.assetIds = assetIds;
         this.type = type;
         this.likelihood = likelihood;
@@ -34,5 +38,6 @@ public class ShipSpawnTemplate {
         this.maxVelocity = maxVelocity;
         this.accellerationFactor = accellerationFactor;
         this.points = points;
+        this.behaviorFactory = behaviorFactory;
     }
 }

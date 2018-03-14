@@ -4,6 +4,8 @@ package de.bitbrain.v0id.core;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
 import de.bitbrain.v0id.GameConfig;
+import de.bitbrain.v0id.ai.ChasingEnemyBehavior;
+import de.bitbrain.v0id.ai.CirclingEnemyBehavior;
 import de.bitbrain.v0id.assets.Assets;
 import de.bitbrain.v0id.core.consumables.HealthConsumable;
 import de.bitbrain.v0id.core.consumables.WeaponUpgradeConsumable;
@@ -76,14 +78,15 @@ public class TemplateService {
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_DESTROYER},
                     GameObjectType.DESTROYER,
-                    8,
-                    0.05f,
+                    12,
+                    0.02f,
                     .3f,
                     weaponTemplates[2], // HEAVY LASER CANNON
                     0f,
-                    20f,
-                    2.3f,
-                    1000
+                    150f,
+                    60.3f,
+                    1000,
+                    CirclingEnemyBehavior.factory()
             ),
             // RAIDER
             new ShipSpawnTemplate(
@@ -96,7 +99,8 @@ public class TemplateService {
                     0f,
                     700f,
                     46.3f,
-                    250
+                    250,
+                    null
             ),
 
             // VIPER
@@ -110,20 +114,22 @@ public class TemplateService {
                     0f,
                     300f,
                     26.3f,
-                    250
+                    250,
+                    null
             ),
             // BOMBER
             new ShipSpawnTemplate(
                     new String[]{Assets.Textures.SHIP_BOMBER},
                     GameObjectType.BOMBER,
-                    3,
-                    0.2f,
+                    2,
+                    0.4f,
                     2f,
                     null, // no weapon
                     0f,
-                    370f,
-                    35.3f,
-                    400
+                    350f,
+                    17.3f,
+                    400,
+                    ChasingEnemyBehavior.factory()
             )
     };
 
