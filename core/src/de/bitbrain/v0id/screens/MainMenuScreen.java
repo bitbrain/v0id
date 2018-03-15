@@ -3,6 +3,7 @@ package de.bitbrain.v0id.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
@@ -10,13 +11,16 @@ import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.audio.AudioManager;
+import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
+import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.v0id.Colors;
 import de.bitbrain.v0id.assets.Assets;
+import de.bitbrain.v0id.ui.Styles;
 
 public class MainMenuScreen extends AbstractScreen {
 
@@ -51,6 +55,19 @@ public class MainMenuScreen extends AbstractScreen {
                 .ease(TweenEquations.easeInOutCubic)
                 .repeatYoyo(Tween.INFINITY, 0)
                 .start(SharedTweenManager.getInstance());
+
+        // Credits
+        Label credits = new Label("game by bitbrain   music by k0stnix", Styles.LABEL_CREDITS);
+        credits.getColor().a = 0.7f;
+        credits.setPosition(Gdx.graphics.getWidth() / 2f - credits.getWidth() / 2f, 65f);
+        context.getStage().addActor(credits);
+
+        // Shaders
+        Vignette v = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        v.setIntensity(1.2f);
+        v.setSaturation(0.7f);
+        v.setLutIntensity(0.9f);
+        context.getRenderPipeline().getPipe(RenderPipeIds.WORLD).addEffects(v);
     }
 
     @Override

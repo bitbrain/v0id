@@ -14,6 +14,7 @@ import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.graphics.pipeline.AbstractRenderLayer;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
+import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
@@ -150,6 +151,13 @@ public class IngameScreen extends AbstractScreen implements KillingMachine.Killi
         context.getStage().addActor(healthBar);
 
         respawner.respawn(player);
+
+        // Shaders
+        Vignette v = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        v.setIntensity(1.2f);
+        v.setSaturation(0.7f);
+        v.setLutIntensity(0.9f);
+        context.getRenderPipeline().getPipe(RenderPipeIds.WORLD).addEffects(v);
     }
 
     @Override

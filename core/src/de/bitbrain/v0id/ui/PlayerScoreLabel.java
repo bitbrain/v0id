@@ -50,7 +50,7 @@ public class PlayerScoreLabel extends HeightedLabel {
         setText(String.valueOf((int)Math.ceil(valueProvider.getValue())));
         super.act(delta);
         if (SharedTweenManager.getInstance().containsTarget(valueProvider)) {
-            SharedAssetManager.getInstance().get(Assets.Sounds.POINT, Sound.class).play(0.1f);
+            SharedAssetManager.getInstance().get(Assets.Sounds.POINT, Sound.class).play(0.05f);
         }
     }
 }

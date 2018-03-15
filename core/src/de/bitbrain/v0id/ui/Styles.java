@@ -17,11 +17,16 @@ public class Styles {
     public static final HeightedLabelStyle LABEL_TEXT_TOOLTIP_HEALTH_UP = new HeightedLabelStyle();
     public static final HeightedLabelStyle LABEL_TEXT_TOOLTIP_WEAPON_UP = new HeightedLabelStyle();
     public static final HeightedLabelStyle LABEL_CAPTION = new HeightedLabelStyle();
+    public static final HeightedLabelStyle LABEL_CREDITS = new HeightedLabelStyle();
 
     public static void init() {
         LABEL_TEXT_MEDIUM.fontColor = Colors.NEON_CHRIMSON;
         LABEL_TEXT_MEDIUM.fontColorHeighted = Colors.NEON_CHRIMSON;
         LABEL_TEXT_MEDIUM.font = BitmapFontBaker.bake(Assets.Fonts.MAIN, 26);
+
+        LABEL_CREDITS.fontColor = Colors.LIGHT_SORROW;
+        LABEL_CREDITS.fontColorHeighted = Colors.LIGHT_SORROW;
+        LABEL_CREDITS.font = BitmapFontBaker.bake(Assets.Fonts.MAIN, 26);
 
         LABEL_CAPTION.fontColor = Colors.NEON_LIME;
         LABEL_CAPTION.fontColorHeighted = Colors.LIGHT_SORROW;

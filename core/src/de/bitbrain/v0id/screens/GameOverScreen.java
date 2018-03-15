@@ -11,6 +11,8 @@ import aurelienribon.tweenengine.Tween;
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
+import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
+import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.ActorTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
@@ -51,6 +53,13 @@ public class GameOverScreen extends AbstractScreen {
                 .target(1f)
                 .repeatYoyo(Tween.INFINITY, 0f)
                 .start(SharedTweenManager.getInstance());
+
+        // Shaders
+        Vignette v = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        v.setIntensity(1.2f);
+        v.setSaturation(0.7f);
+        v.setLutIntensity(0.9f);
+        context.getRenderPipeline().getPipe(RenderPipeIds.WORLD).addEffects(v);
     }
 
     @Override

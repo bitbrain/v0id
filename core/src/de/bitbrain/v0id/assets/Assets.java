@@ -24,7 +24,7 @@ public interface Assets {
     interface Particles {
         String SLIME = "particles/slime.p";
         String SLIME_RED = "particles/slime-red.p";
-        String EXPLOSION = "particles/explosion.p";
+        String SLIME_BLUE = "particles/slime-blue.p";
         String CONSUMABLE_HEALTH = "particles/slime.p";
         String CONSUMABLE_WEAPON_UPGRADE = "particles/slime.p";
     }

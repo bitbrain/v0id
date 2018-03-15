@@ -66,8 +66,12 @@ public class Weapon {
         }
     }
 
+    public void upgrade(int levels) {
+        this.level += levels;
+    }
+
     public void upgrade() {
-        level++;
+        this.level++;
     }
 
     private int getNumberOfShots() {

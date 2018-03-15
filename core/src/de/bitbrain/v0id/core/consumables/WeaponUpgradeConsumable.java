@@ -19,7 +19,7 @@ public class WeaponUpgradeConsumable implements Consumable {
             Weapon weapon = (Weapon)target.getAttribute(Attribute.WEAPON);
             weapon.upgrade();
             Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_WEAPON_UP, "WEAPON UPGRADED!");
-            SharedAssetManager.getInstance().get(Assets.Sounds.WEAPON_UP, Sound.class).play();
+            SharedAssetManager.getInstance().get(Assets.Sounds.WEAPON_UP, Sound.class).play(0.3f);
         }
     }
 }

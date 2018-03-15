@@ -97,7 +97,7 @@ public class BulletMachine {
                 target.setDimensions(bullet.getSize(), bullet.getSize());
                 target.setPosition(x, y);
                 target.setType(bulletType);
-                target.setAttribute(Attribute.HEALTH, 2);
+                target.setAttribute(Attribute.HEALTH, 3);
                 target.setAttribute(Attribute.KIND, Kind.BULLET);
             }
         }, true);

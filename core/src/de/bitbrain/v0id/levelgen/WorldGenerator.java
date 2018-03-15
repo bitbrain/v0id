@@ -8,9 +8,11 @@ import java.util.Random;
 
 import de.bitbrain.braingdx.util.DeltaTimer;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.v0id.core.Attribute;
 import de.bitbrain.v0id.core.GameObjectFactory;
 import de.bitbrain.v0id.core.ShipSpawnTemplate;
 import de.bitbrain.v0id.core.TemplateService;
+import de.bitbrain.v0id.core.Weapon;
 
 public class WorldGenerator {
 
@@ -49,7 +51,16 @@ public class WorldGenerator {
                 for (int i = 0; i < count; ++i) {
                     if (template.likelihood > random.nextFloat()) {
                         // Do spawn a new enemy
-                        factory.spawnShip(template, getRandomX(), getCameraTop());
+                        GameObject object = factory.spawnShip(template, getRandomX(), getCameraTop());
+                        int modifiedHealth = (Integer)object.getAttribute(Attribute.INITIAL_HEALTH);
+                        modifiedHealth *= Math.max(1, Math.floor(time / 40));
+                        object.setAttribute(Attribute.INITIAL_HEALTH , modifiedHealth);
+                        object.setAttribute(Attribute.HEALTH,modifiedHealth);
+                        if (object.hasAttribute(Attribute.WEAPON)) {
+                            Weapon weapon = (Weapon)object.getAttribute(Attribute.WEAPON);
+                            int upgradeLevels = (int)Math.floor(time / 20f);
+                            weapon.upgrade(upgradeLevels);
+                        }
                     }
                 }
                 timer.reset();

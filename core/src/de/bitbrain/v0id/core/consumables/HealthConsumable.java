@@ -26,7 +26,7 @@ public class HealthConsumable implements Consumable {
                 Tooltip.getInstance().create(target, Styles.LABEL_TEXT_TOOLTIP_HEALTH_UP, "HEALTH UP!");
                 target.setAttribute(Attribute.HEALTH, target.getAttribute(Attribute.INITIAL_HEALTH));
             }
-            SharedAssetManager.getInstance().get(Assets.Sounds.HEALTH_UP, Sound.class).play();
+            SharedAssetManager.getInstance().get(Assets.Sounds.HEALTH_UP, Sound.class).play(0.3f);
         }
     }
 

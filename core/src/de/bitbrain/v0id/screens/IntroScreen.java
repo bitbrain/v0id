@@ -11,7 +11,9 @@ import aurelienribon.tweenengine.TweenEquations;
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.audio.AudioManager;
+import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
+import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
@@ -56,6 +58,13 @@ public class IntroScreen extends AbstractScreen {
                 })
                 .start(SharedTweenManager.getInstance());
         AudioManager.getInstance().fadeInMusic(Assets.Musics.INTRO, 3f);
+
+        // Shaders
+        Vignette v = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        v.setIntensity(1.2f);
+        v.setSaturation(0.7f);
+        v.setLutIntensity(0.9f);
+        context.getRenderPipeline().getPipe(RenderPipeIds.WORLD).addEffects(v);
     }
 
     @Override

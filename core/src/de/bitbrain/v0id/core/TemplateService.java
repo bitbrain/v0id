@@ -27,7 +27,7 @@ public class TemplateService {
                     Assets.Textures.CONSUMABLE_WEAPON_UPGRADE,
                     Assets.Particles.CONSUMABLE_WEAPON_UPGRADE,
                     new WeaponUpgradeConsumable(),
-                    0.08f
+                    0.2f
             ),
     };
 
@@ -60,7 +60,7 @@ public class TemplateService {
                     BulletType.PHOTON,
                     Assets.Textures.BULLET_PHOTON,
                     Assets.Sounds.SOUND_SHOT_01,
-                    Assets.Particles.SLIME_RED,
+                    Assets.Particles.SLIME_BLUE,
                     0.3f,
                     0.0f,
                     1f,

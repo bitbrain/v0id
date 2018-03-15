@@ -116,15 +116,15 @@ active: false
 active: false
 - Tint - 
 colorsCount: 9
-colors0: 1.0
-colors1: 0.047058824
-colors2: 0.4117647
-colors3: 1.0
-colors4: 0.047058824
-colors5: 0.4862745
-colors6: 1.0
-colors7: 0.047058824
-colors8: 0.6745098
+colors0: 0.047058824
+colors1: 0.2784314
+colors2: 1.0
+colors3: 0.047058824
+colors4: 0.72156864
+colors5: 1.0
+colors6: 0.047058824
+colors7: 1.0
+colors8: 1.0
 timelineCount: 3
 timeline0: 0.0
 timeline1: 0.628752
@@ -171,8 +171,8 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 1000.0
-lowMax: 1000.0
+lowMin: 250.0
+lowMax: 250.0
 - Count - 
 min: 10
 max: 100
@@ -189,8 +189,8 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 1000.0
-highMax: 1000.0
+highMin: 250.0
+highMax: 250.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -295,12 +295,12 @@ active: false
 active: false
 - Tint - 
 colorsCount: 6
-colors0: 1.0
-colors1: 0.047058824
-colors2: 0.5372549
-colors3: 1.0
-colors4: 0.047058824
-colors5: 0.84705883
+colors0: 0.047058824
+colors1: 0.39215687
+colors2: 1.0
+colors3: 0.047058824
+colors4: 0.70980394
+colors5: 1.0
 timelineCount: 2
 timeline0: 0.0
 timeline1: 1.0
